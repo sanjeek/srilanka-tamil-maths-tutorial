@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172d29">
+<title>தரம் 5 கணிதம் | இலங்கை கற்றல்</title>
+<style>
+:root{color-scheme:light;--ink:#172d29;--green:#126651;--mint:#e5f5ed;--paper:#f3f6f4;--line:#d9e4df;--muted:#45615a}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.65 "Noto Sans Tamil",system-ui,sans-serif}header{background:#172d29;color:white}.bar,main,footer{max-width:1040px;margin:auto;padding:16px 24px}.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700}.badge{color:#172d29;background:#d8f795;padding:4px 12px;border-radius:100px;font-size:.875rem}.hero{position:relative;overflow:hidden;background:#e3f2e9;border:1px solid var(--line);border-radius:24px;padding:clamp(24px,5vw,54px);margin:24px 0}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.2;margin:12px 0}.hero p{max-width:560px;color:var(--muted)}.hero-art{position:absolute;right:35px;top:22px;color:#126651;font:bold clamp(42px,8vw,100px)/1 Georgia;opacity:.15;letter-spacing:-.1em;pointer-events:none}button,input{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 16px;background:white;color:var(--ink);font-weight:700;min-height:44px}button.primary{background:var(--green);border-color:var(--green);color:white}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:3px solid #ad5607;outline-offset:3px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px;align-items:start}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:clamp(16px,3vw,28px);margin-bottom:16px}h2,h3,p{margin-top:0}h2{line-height:1.5}h3{margin-bottom:12px}.eyebrow{color:var(--green);font-weight:750}.actions,.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.navigator{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.navigator button{padding:6px}.navigator .done{background:var(--mint);border-color:#94c9b5}.navigator [aria-current]{box-shadow: inset 0 0 0 2px var(--green)}label.option{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;min-height:48px;cursor:pointer}label.option:has(input:checked){background:var(--mint);border-color:var(--green)}input[type=radio]{accent-color:var(--green);width:18px;height:18px}input[type=text]{width:min(100%,320px);display:block;border:1px solid var(--muted);border-radius:10px;padding:10px;margin-top:8px}progress{display:block;width:100%;accent-color:var(--green);height:10px;margin:8px 0 18px}.stats>span{background:var(--mint);padding:8px 12px;border-radius:10px}details{border-top:1px solid var(--line)}summary{cursor:pointer;padding:14px 0;font-weight:700}details p,details ol{margin-bottom:10px}.status{display:inline-block;margin-left:8px;font-size:.875rem;color:var(--muted)}.correct{color:var(--green)}.incorrect{color:#a43b21}footer{color:var(--muted);font-size:.875rem}dialog{width:min(480px,calc(100% - 32px));border:1px solid var(--line);border-radius:18px;padding:22px;color:var(--ink)}dialog::backdrop{background:#172d2994}@media(max-width:720px){.layout{grid-template-columns:1fr}.bar,main,footer{padding-left:14px;padding-right:14px}.hero-art{right:20px}.navigator{grid-template-columns:repeat(10,1fr)}}@media(max-width:550px){.navigator{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="bar"><span>இலங்கை கற்றல்</span><span class="badge">மாதிரிப் பயிற்சி</span></div></header>
+<main id="app"></main>
+<footer>இலங்கை கற்றல் · தரம் 5 கணிதம்</footer>
+<dialog id="submit-dialog" aria-labelledby="confirm-title">
+<h2 id="confirm-title">பயிற்சியைச் சமர்ப்பிக்கலாமா?</h2>
+<p id="confirm-text"></p>
+<form method="dialog" class="actions"><button value="cancel" autofocus>தொடர்ந்து பயிற்சி செய்க</button><button class="primary" value="submit">சமர்ப்பிக்கவும்</button></form>
+</dialog>
+<script type="module">
+const choice=(topic,prompt,options,answer,steps)=>({topic,prompt,options,answer:String(answer),solution:options[answer],steps});
+const number=(topic,prompt,answer,unit,steps)=>({topic,prompt,answer:String(answer),solution:answer.toLocaleString('en-LK')+' '+unit,steps});
+const arithmetic='எண்களும் கணக்கீடும்', fractions='பின்னங்கள்', measure='அளவீடு', practical='வாழ்க்கைக் கணிதம்';
+const questions=[
+choice(arithmetic,'36,482 என்ற எண்ணில் 6 இன் இடப்பெறுமானம் என்ன?',['60','600','6,000','60,000'],2,['வலப்புறத்திலிருந்து ஒன்றுகள், பத்துகள், நூறுகள், ஆயிரங்கள் என எண்ணுங்கள்.','6 ஆயிரங்கள் இடத்தில் உள்ளது. 6 × 1,000 = 6,000.']),
+choice(arithmetic,'4,758 + 2,689 = ?',['7,347','7,447','7,457','7,547'],1,['2,689 ஐ 2,000 + 600 + 80 + 9 எனப் பிரிக்கலாம்.','4,758 + 2,000 = 6,758. அடுத்து 600, 80, 9 ஆகியவற்றைக் கூட்டினால் 7,358 → 7,438 → 7,447.']),
+choice(arithmetic,'8,000 இலிருந்து 3,475 ஐக் கழித்தால் எவ்வளவு?',['4,425','4,475','4,525','5,525'],2,['முதலில் 3,000 ஐக் கழித்தால் 5,000.','400, 70, 5 ஆகியவற்றை முறையே கழித்தால் 4,600 → 4,530 → 4,525.']),
+choice(practical,'ஒரு பெட்டியில் 24 பென்சில்கள் உள்ளன. 6 பெட்டிகளில் மொத்தம் எத்தனை பென்சில்கள் இருக்கும்?',['120','124','140','144'],3,['24 ஐ 20 + 4 எனப் பிரிக்கலாம்.','20 × 6 = 120. 4 × 6 = 24.','மொத்தம் 120 + 24 = 144 பென்சில்கள்.']),
+choice(practical,'96 மாம்பழங்களை 8 கூடைகளில் சமமாகப் பகிர்ந்தால், ஒரு கூடையில் எத்தனை மாம்பழங்கள் இருக்கும்?',['10','12','14','16'],1,['சமமாகப் பகிர 96 ஐ 8 ஆல் வகுக்க வேண்டும்.','96 ÷ 8 = 12. சரிபார்க்க, 12 × 8 = 96.']),
+choice(fractions,'32 மாணவர்களில் ¼ பங்கினர் சதுரங்கம் விளையாடுகிறார்கள். எத்தனை பேர் விளையாடுகிறார்கள்?',['4','6','8','16'],2,['¼ என்பது நான்கு சம பங்குகளில் ஒரு பங்கு.','32 ÷ 4 = 8 மாணவர்கள்.']),
+choice(fractions,'⅜ + ⅛ எவ்வளவு?',['⅜','½','⅝','¾'],1,['இரு பின்னங்களிலும் கீழ் எண் 8.','மேல் எண்களைக் கூட்டுங்கள். (3 + 1) / 8 = 4/8.','எட்டில் நான்கு பங்கு என்பது அரைப் பங்கு.']),
+choice(measure,'2 மீற்றர் 35 சென்ரிமீற்றர் என்பது எத்தனை சென்ரிமீற்றர்?',['205','215','230','235'],3,['1 மீற்றர் = 100 சென்ரிமீற்றர்.','2 மீற்றர் = 200 சென்ரிமீற்றர்.','200 + 35 = 235 சென்ரிமீற்றர்.']),
+choice(measure,'ஒரு நிகழ்ச்சி காலை 9:20க்குத் தொடங்கி 45 நிமிடங்கள் நடைபெறுகிறது. அது எப்போது முடியும்?',['9:55','10:00','10:05','10:15'],2,['9:20 இலிருந்து 10:00 வரை 40 நிமிடங்கள்.','மீதமுள்ள 5 நிமிடங்களைக் கூட்டினால் காலை 10:05.']),
+choice(measure,'ஒரு செவ்வகத்தின் நீளம் 9 செ.மீ., அகலம் 4 செ.மீ. அதன் சுற்றளவு என்ன?',['13 செ.மீ.','18 செ.மீ.','26 செ.மீ.','36 செ.மீ.'],2,['சுற்றளவைக் காண நான்கு பக்கங்களின் நீளங்களையும் கூட்டுங்கள்.','9 + 4 + 9 + 4 = 26 செ.மீ.']),
+choice(practical,'ஒரு கொப்பியின் விலை ரூ. 85. மூன்று கொப்பிகளை வாங்க ரூ. 500 கொடுத்தால், மீதிப் பணம் எவ்வளவு?',['ரூ. 225','ரூ. 235','ரூ. 245','ரூ. 255'],2,['மூன்று கொப்பிகளின் விலை 3 × 85 = ரூ. 255.','மீதிப் பணம் 500 − 255 = ரூ. 245.']),
+choice(arithmetic,'7, 14, 21, 28, ___ என்ற தொடரில் அடுத்த எண் என்ன?',['32','34','35','36'],2,['ஒவ்வொரு எண்ணுடனும் 7 ஐக் கூட்டினால் அடுத்த எண் கிடைக்கிறது.','28 + 7 = 35.']),
+number(arithmetic,'7,648 ஐ அண்மித்த நூறுக்கு வட்டமிடுக.',7600,'',['பத்துகள் இடத்தில் 4 உள்ளது. அது 5 ஐ விடக் குறைவு.','நூறுகள் இடத்திலுள்ள 6 ஐ வைத்துக்கொண்டு, பத்துகள் மற்றும் ஒன்றுகள் இடங்களில் 0 எழுதுங்கள்.']),
+number(practical,'திங்கட்கிழமை 1,275 லீற்றர் நீரும் செவ்வாய்க்கிழமை 980 லீற்றர் நீரும் பயன்படுத்தப்பட்டது. மொத்தம் எத்தனை லீற்றர்?',2255,'லீற்றர்',['980 என்பது 1,000 ஐ விட 20 குறைவு.','1,275 + 1,000 = 2,275.','2,275 − 20 = 2,255 லீற்றர்.']),
+number(practical,'53 மாணவர்கள் சுற்றுலா செல்கிறார்கள். ஒரு வாகனத்தில் அதிகபட்சம் 8 மாணவர்கள் செல்லலாம். குறைந்தது எத்தனை வாகனங்கள் தேவை?',7,'வாகனங்கள்',['6 × 8 = 48. ஆறு வாகனங்களில் 48 மாணவர்கள் செல்லலாம்.','மீதமுள்ள 5 மாணவர்களுக்கு இன்னொரு வாகனம் தேவை.','6 + 1 = 7 வாகனங்கள்.']),
+number(measure,'1 கிலோகிராம் 250 கிராம் அரிசியுடன் 750 கிராம் அரிசியைச் சேர்த்தால் மொத்தம் எத்தனை கிலோகிராம்?',2,'கிலோகிராம்',['250 + 750 = 1,000 கிராம்.','1,000 கிராம் என்பது 1 கிலோகிராம்.','ஏற்கெனவே உள்ள 1 கிலோகிராமையும் சேர்த்தால் 2 கிலோகிராம்.']),
+number(measure,'ஒரு சதுரத்தின் ஒரு பக்க நீளம் 7 செ.மீ. அதன் பரப்பளவு எத்தனை சதுர சென்ரிமீற்றர்?',49,'சதுர சென்ரிமீற்றர்',['சதுரத்தின் நீளமும் அகலமும் 7 செ.மீ.','பரப்பளவு = நீளம் × அகலம் = 7 × 7 = 49 சதுர சென்ரிமீற்றர்.']),
+number(measure,'ஒரு குடத்தில் 3 லீற்றர் நீர் உள்ளது. அதிலிருந்து 850 மில்லிலீற்றரை எடுத்தால், எத்தனை மில்லிலீற்றர் மீதமிருக்கும்?',2150,'மில்லிலீற்றர்',['1 லீற்றர் = 1,000 மில்லிலீற்றர்.','3 லீற்றர் = 3,000 மில்லிலீற்றர்.','3,000 − 850 = 2,150 மில்லிலீற்றர்.']),
+number(fractions,'80 பக்க நூலில் கவின் முதல் நாள் ¼ பங்கையும் இரண்டாம் நாள் 20 பக்கங்களையும் வாசித்தான். இன்னும் எத்தனை பக்கங்கள் வாசிக்க வேண்டும்?',40,'பக்கங்கள்',['முதல் நாள் 80 ÷ 4 = 20 பக்கங்கள்.','இரண்டு நாட்களிலும் 20 + 20 = 40 பக்கங்கள் வாசித்தான்.','மீதம் 80 − 40 = 40 பக்கங்கள்.']),
+number(practical,'மூன்று நாட்களில் முறையே 18, 25, 17 கொப்பிகள் விற்கப்பட்டன. ஒரு கொப்பியின் விலை ரூ. 50 எனில், மொத்த விற்பனைத் தொகை எத்தனை ரூபாய்?',3000,'ரூபாய்',['விற்கப்பட்ட கொப்பிகளின் எண்ணிக்கை 18 + 25 + 17 = 60.','60 × 50 = 3,000 ரூபாய்.'])
+];
+const app=document.querySelector('#app');
+const dialog=document.querySelector('#submit-dialog');
+const total=questions.length;
+const key='tamil-maths-grade5-v1';
+const fresh=(screen='home')=>({screen,index:0,answers:Array(total).fill('')});
+let state=fresh();
+try {
+  const saved=JSON.parse(localStorage.getItem(key));
+  if(saved && ['quiz','results'].includes(saved.screen) && Number.isInteger(saved.index) && saved.index>=0 && saved.index<total && saved.answers?.length===total && saved.answers.every(value=>typeof value==='string')) state=saved;
+} catch {}
+function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch{}}
+const answered=value=>value.trim()!=='';
+const normalize=value=>value.trim().replace(/[௦-௯]/g,digit=>String(digit.charCodeAt(0)-0x0be6)).replace(/[,\s]/g,'').replace(/^0+(?=\d)/,'');
+const count=()=>state.answers.filter(answered).length;
+const status=(q,i)=>!answered(state.answers[i])?'unanswered':(q.options?state.answers[i]:normalize(state.answers[i]))===q.answer?'correct':'incorrect';
+const labels={correct:'சரி',incorrect:'தவறு',unanswered:'விடையளிக்கவில்லை'};
+const escape=value=>value.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const hero=(title,body)=>'<section class="hero"><span class="hero-art" aria-hidden="true">× +</span><div class="eyebrow">தமிழ் வழிப் பயிற்சி</div><h1 tabindex="-1">'+title+'</h1>'+body+'</section>';
+function render(focus=false){
+  if(state.screen==='home'){
+    app.innerHTML=hero('தரம் 5 கணிதம்','<p>20 வினாக்களுக்கு நீங்களே விடையளியுங்கள். சமர்ப்பித்த பின் பெறுபேற்றையும் ஒவ்வொரு விடைக்கான படிப்படியான விளக்கத்தையும் பாருங்கள்.</p><button class="primary" data-action="start">பயிற்சியைத் தொடங்குக</button>');
+  } else if(state.screen==='quiz'){
+    const i=state.index,q=questions[i],value=state.answers[i];
+    const control=q.options?q.options.map((option,j)=>'<label class="option"><input type="radio" name="answer" value="'+j+'" '+(value===String(j)?'checked':'')+'><span>'+option+'</span></label>').join(''):'<label for="numeric">எண்ணில் விடையை எழுதுக</label><input type="text" inputmode="numeric" autocomplete="off" id="numeric" maxlength="24" value="'+escape(value)+'">';
+    app.innerHTML='<div class="layout"><section class="card"><div class="eyebrow">'+q.topic+' · வினா '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button data-action="previous" '+(i===0?'disabled':'')+'>முந்தைய வினா</button>'+(i<total-1?'<button class="primary" data-action="next">அடுத்த வினா</button>':'<button class="primary" data-action="review">சமர்ப்பிக்கவும்</button>')+'</div></section><aside class="card"><h3>வினாக்கள்</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="வினாக்களைத் தெரிவு செய்க">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button data-action="review">சமர்ப்பிக்கவும்</button></div>':'')+'</aside></div>';
+    updateProgress();
+  } else {
+    const results=questions.map(status);
+    const score=results.filter(value=>value==='correct').length;
+    app.innerHTML=hero('உங்கள் பெறுபேறு','<div class="stats"><span><strong>'+score+' / '+total+'</strong> புள்ளிகள்</span><span>'+results.filter(value=>value==='incorrect').length+' தவறு</span><span>'+(total-count())+' விடையளிக்கவில்லை</span></div>')+
+      '<section class="card"><h2>விடைகளும் விளக்கங்களும்</h2><p>விளக்கத்தைப் பார்க்க ஒரு வினாவைத் திறக்கவும்.</p>'+questions.map((q,i)=>{
+        const value=state.answers[i];
+        const response=answered(value)?(q.options?.[Number(value)]??escape(value)):labels.unanswered;
+        return '<details><summary>வினா '+(i+1)+' · '+q.topic+' <span class="status '+results[i]+'">'+labels[results[i]]+'</span></summary><p><strong>'+q.prompt+'</strong></p><p>உங்கள் விடை — '+response+'</p><p>சரியான விடை — <strong>'+q.solution+'</strong></p><ol>'+q.steps.map(step=>'<li>'+step+'</li>').join('')+'</ol></details>';
+      }).join('')+'<div class="actions"><button class="primary" data-action="start">மீண்டும் பயிற்சி செய்க</button></div></section>';
+  }
+  if(focus) app.querySelector('h1,h2')?.focus();
+}
+function updateProgress(){
+  document.querySelector('#progress-label').textContent=count()+' / '+total+' விடையளிக்கப்பட்டவை';
+  document.querySelector('#progress').value=count();
+  app.querySelectorAll('[data-index]').forEach((button,i)=>{
+    const done=answered(state.answers[i]);
+    button.classList.toggle('done',done);
+    button.setAttribute('aria-label','வினா '+(i+1)+' · '+(done?'விடையளிக்கப்பட்டது':labels.unanswered));
+  });
+}
+app.addEventListener('input',event=>{
+  if(state.screen!=='quiz'||!event.target.matches('#numeric,input[name=answer]')) return;
+  state.answers[state.index]=event.target.value;
+  save();
+  updateProgress();
+});
+app.addEventListener('click',event=>{
+  const button=event.target.closest('[data-action]');
+  if(!button) return;
+  switch(button.dataset.action){
+    case 'start': state=fresh('quiz'); break;
+    case 'previous': state.index--; break;
+    case 'next': state.index++; break;
+    case 'jump': state.index=Number(button.dataset.index); break;
+    case 'review': {
+      const remaining=total-count();
+      document.querySelector('#confirm-text').textContent=remaining?remaining+' வினாக்களுக்கு இன்னும் விடையளிக்கவில்லை. சமர்ப்பித்ததும் பெறுபேற்றைப் பார்க்கலாம்.':'அனைத்து வினாக்களுக்கும் விடையளித்துள்ளீர்கள். சமர்ப்பித்ததும் பெறுபேற்றைப் பார்க்கலாம்.';
+      dialog.returnValue='';
+      dialog.showModal();
+      return;
+    }
+  }
+  save();
+  render(true);
+});
+dialog.addEventListener('close',()=>{
+  if(dialog.returnValue!=='submit') return;
+  state.screen='results';
+  save();
+  render(true);
+});
+render();
+</script>
+</body>
+</html>
