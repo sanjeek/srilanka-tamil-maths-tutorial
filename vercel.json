@@ -11,6 +11,10 @@
     {
       "source": "/english",
       "destination": "/english.html"
+    },
+    {
+      "source": "/sms-demo",
+      "destination": "/sms-demo.html"
     }
   ]
 }

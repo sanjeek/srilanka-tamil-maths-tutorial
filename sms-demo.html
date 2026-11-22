@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMS Login Demo | Chithambara Maths Challenge</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f1f6f2;color:#172e26;font:1rem/1.55 system-ui,sans-serif}header{background:#15392e;color:#fff;padding:18px max(16px,calc((100% - 650px)/2));font-weight:700}main{max-width:650px;margin:auto;padding:20px 16px}section{padding:clamp(18px,5vw,30px);background:#fff;border:1px solid #d5e4da;border-radius:20px}h1,h2,p{margin-top:0}h1{line-height:1.2}h2{font-size:1.2rem}.badge{display:inline-block;margin-bottom:14px;padding:4px 10px;background:#deedba;border-radius:30px;font-weight:700}.inbox{margin:16px 0;padding:15px;border-radius:12px;background:#ebf4ee}.code{font-size:1.6rem;letter-spacing:.18em;font-variant-numeric:tabular-nums}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}button,input{font:inherit;min-height:46px;border:1px solid #527467;border-radius:10px;padding:8px 12px}button{cursor:pointer;color:#155340;background:#fff;font-weight:700}button.primary{background:#155340;color:#fff}button:disabled{opacity:.5;cursor:default}input{width:min(100%,19rem);display:block;margin:5px 0 0}label{font-weight:700}a{color:#155340}:focus-visible{outline:3px solid #a64d0c;outline-offset:3px}#notice{margin-top:14px;color:#8a301c}#notice:empty{display:none}@media(max-width:480px){.actions button{flex:1 1 100%}input{width:100%}}
+</style>
+</head>
+<body>
+<header>Chithambara Maths Challenge</header>
+<main>
+<p><a href="/">Back to website</a></p>
+<section aria-labelledby="heading">
+<span class="badge">Test mode</span>
+<h1 id="heading" tabindex="-1">SMS login demo</h1>
+<p>Try guardian sign-in with a sample number. The test SMS appears on this page. No message is sent and no account is created.</p>
+<div id="panel"></div>
+<p id="notice" role="status"></p>
+</section>
+</main>
+<script type="module" src="/sms-demo.js"></script>
+</body>
+</html>
