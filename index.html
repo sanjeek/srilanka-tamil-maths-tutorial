@@ -16,6 +16,43 @@ header{background:#102d25}.bar,main,.site-footer{max-width:1200px;margin:auto;pa
 .portal-nav{display:flex;align-items:center;gap:clamp(8px,3vw,26px);flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--line);padding:10px max(16px,calc((100vw - 1120px)/2))}
 .portal-nav a,.portal-login a{color:var(--green);font-weight:700}.portal-nav button{margin-left:auto}.portal-login{max-width:480px;margin:28px auto}.portal-login h1{margin:14px 0}.portal-login label{display:block;font-weight:700;margin-top:12px}.portal-login input{width:100%;padding:10px;border:1px solid var(--muted);border-radius:10px;margin:5px 0 0}.portal-login [role=alert]{min-height:1.65em;color:#a43b21;margin:9px 0}.portal-button,.portal-secondary{display:inline-flex;min-height:44px;align-items:center;border-radius:12px;padding:9px 13px;margin:2px 2px 2px 0;font-weight:700;text-decoration:none}.portal-button{background:#e4efa9;color:#123128}.portal-secondary{color:white;border:1px solid #a9c5b7}
 table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}#portal-notice:not(:empty){padding:10px 18px;color:#a43b21}
+
+.portal-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:6px 12px;border-radius:10px;text-decoration:none}
+.portal-nav a[aria-current="page"]{background:var(--mint);box-shadow:inset 0 -2px var(--green)}
+.quiz-return{display:inline-flex;align-items:center;min-height:44px;color:var(--green);font-weight:700;margin-bottom:8px}
+.quiz-card h2{font-size:clamp(1.2rem,2.5vw,1.55rem)}
+.portal-login button,.dashboard-action{min-height:48px}
+@media(max-width:600px){
+  main{padding-top:8px}
+  .bar{min-height:70px;gap:8px}
+  .bar .badge{white-space:normal;max-width:112px}
+  .portal-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:6px 12px}
+  .portal-nav a{padding:6px 3px;text-align:center;font-size:.875rem;line-height:1.4}
+  .portal-nav button{grid-column:1 / -1;margin:0;justify-self:end;font-size:.875rem}
+  .landing-hero{margin:10px 0 16px;border-radius:18px}
+  .landing-copy{padding:22px 18px}
+  .landing-copy h1{font-size:clamp(1.7rem,8vw,2.35rem)}
+  .landing-copy p{margin-bottom:14px}
+  .landing-image{height:clamp(155px,48vw,245px);aspect-ratio:auto;object-position:center 52%}
+  .entry-actions{display:grid;gap:8px}
+  .entry-actions a{margin:0;justify-content:center;text-align:center;min-height:48px}
+  .card,.hero{border-radius:16px;padding:16px;margin-bottom:12px}
+  .hero{margin-top:12px}
+  .hero h1,.portal-login h1{font-size:clamp(1.55rem,7vw,2rem)}
+  .portal-login{margin-top:14px}
+  .portal-login button,.dashboard-action,.navigator-card .actions button{width:100%}
+  .layout{grid-template-columns:minmax(0,1fr);gap:4px}
+  .quiz-card .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .quiz-card .actions button{padding:9px 5px;min-height:48px;font-size:.875rem}
+  .navigator{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .navigator button{min-height:46px}
+  .option{min-height:50px}
+  .quiz-card input[type=text]{width:100%}
+  dialog{max-height:calc(100dvh - 32px);overflow:auto}
+  dialog .actions{display:grid;gap:8px}
+  td,th{overflow-wrap:anywhere}
+  .site-footer{display:grid;gap:5px}
+}
 </style>
 </head>
 <body>
@@ -60,7 +97,7 @@ function render(focus=false){
           <div class="eyebrow">தமிழ் வழிப் பயிற்சி</div>
           <h1 tabindex="-1">தரம் 5 கணிதம்</h1>
           <p>20 வினாக்களுக்கு நீங்களே விடையளியுங்கள். சமர்ப்பித்த பின் பெறுபேற்றையும் ஒவ்வொரு விடைக்கான படிப்படியான விளக்கத்தையும் பாருங்கள்.</p>
-          <a class="portal-button" href="/student">மாணவர் உள்நுழைவு</a> <a class="portal-secondary" href="/teacher">ஆசிரியர் உள்நுழைவு</a>
+          <div class="entry-actions"><a class="portal-button" href="/student">மாணவர் உள்நுழைவு</a> <a class="portal-secondary" href="/teacher">ஆசிரியர் உள்நுழைவு</a></div>
         </div>
         <img class="landing-image" src="images/maths-desk.webp" alt="கணிதக் குறிப்பேடு, அளவுகோல், பென்சில் மற்றும் கோப்பை" fetchpriority="high">
       </section>
@@ -82,12 +119,12 @@ function render(focus=false){
   } else if(state.screen==='quiz'){
     const i=state.index,q=questions[i],value=state.answers[i];
     const control=q.options?q.options.map((option,j)=>'<label class="option"><input type="radio" name="answer" value="'+j+'" '+(value===String(j)?'checked':'')+'><span>'+option+'</span></label>').join(''):'<label for="numeric">எண்ணில் விடையை எழுதுக</label><input type="text" inputmode="numeric" autocomplete="off" id="numeric" maxlength="24" value="'+escape(value)+'">';
-    app.innerHTML='<div class="layout"><section class="card"><div class="eyebrow">'+q.topic+' · வினா '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button data-action="previous" '+(i===0?'disabled':'')+'>முந்தைய வினா</button>'+(i<total-1?'<button class="primary" data-action="next">அடுத்த வினா</button>':'<button class="primary" data-action="review">சமர்ப்பிக்கவும்</button>')+'</div></section><aside class="card"><h3>வினாக்கள்</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="வினாக்களைத் தெரிவு செய்க">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button data-action="review">சமர்ப்பிக்கவும்</button></div>':'')+'</aside></div>';
+    app.innerHTML='<a class="quiz-return" href="/student">மாணவர் பகுதி</a><div class="layout"><section class="card quiz-card"><div class="eyebrow">'+q.topic+' · வினா '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button data-action="previous" '+(i===0?'disabled':'')+'>முந்தைய வினா</button>'+(i<total-1?'<button class="primary" data-action="next">அடுத்த வினா</button>':'<button class="primary" data-action="review">சமர்ப்பிக்கவும்</button>')+'</div></section><aside class="card navigator-card"><h3>வினாக்கள்</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="வினாக்களைத் தெரிவு செய்க">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button data-action="review">சமர்ப்பிக்கவும்</button></div>':'')+'</aside></div>';
     updateProgress();
   } else {
     const results=questions.map(status);
     const score=results.filter(value=>value==='correct').length;
-    app.innerHTML=hero('உங்கள் பெறுபேறு','<div class="stats"><span><strong>'+score+' / '+total+'</strong> புள்ளிகள்</span><span>'+results.filter(value=>value==='incorrect').length+' தவறு</span><span>'+(total-count())+' விடையளிக்கவில்லை</span></div>')+
+    app.innerHTML='<a class="quiz-return" href="/student">மாணவர் பகுதி</a>'+hero('உங்கள் பெறுபேறு','<div class="stats"><span><strong>'+score+' / '+total+'</strong> புள்ளிகள்</span><span>'+results.filter(value=>value==='incorrect').length+' தவறு</span><span>'+(total-count())+' விடையளிக்கவில்லை</span></div>')+
       '<section class="card"><h2>விடைகளும் விளக்கங்களும்</h2><p>விளக்கத்தைப் பார்க்க ஒரு வினாவைத் திறக்கவும்.</p>'+questions.map((q,i)=>{
         const value=state.answers[i];
         const response=answered(value)?(q.options?.[Number(value)]??escape(value)):labels.unanswered;
@@ -139,6 +176,8 @@ dialog.addEventListener('close',()=>{
 });
 const portal = location.pathname.replace(/^\/|\/$/g, '');
 const protectedPage = portal === 'student' || portal === 'teacher';
+const activeNav = [...document.querySelectorAll('.portal-nav a')].find(link => link.pathname === (protectedPage ? '/' + portal : '/'));
+activeNav?.setAttribute('aria-current', 'page');
 let session;
 
 function login(message = '') {
@@ -174,7 +213,7 @@ function dashboard() {
     : count() + ' / ' + total + ' விடையளிக்கப்பட்டவை';
   const action = state.screen === 'results' ? 'பெறுபேற்றைப் பாருங்கள்' : hasAttempt ? 'பயிற்சியைத் தொடருங்கள்' : 'பயிற்சியைத் தொடங்குங்கள்';
   app.innerHTML = hero('மாணவர் பகுதி', '<p>' + escape(session.name) + ' · தமிழ் வழிப் பயிற்சி</p>') +
-    '<section class="card"><h2>தரம் 5 கணிதம்</h2><p>' + summary + '</p><button class="primary" data-action="' + (hasAttempt ? 'resume' : 'start') + '">' + action + '</button></section>';
+    '<section class="card"><h2>தரம் 5 கணிதம்</h2><p>' + summary + '</p><button class="primary dashboard-action" data-action="' + (hasAttempt ? 'resume' : 'start') + '">' + action + '</button></section>';
 }
 
 async function portalRequest(body) {
