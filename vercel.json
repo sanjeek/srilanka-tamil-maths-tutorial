@@ -15,6 +15,10 @@
     {
       "source": "/sms-demo",
       "destination": "/sms-demo.html"
+    },
+    {
+      "source": "/sample-quiz",
+      "destination": "/index.html"
     }
   ]
 }

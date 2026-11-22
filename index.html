@@ -77,7 +77,8 @@ let questions = [];
 const app=document.querySelector('#app');
 const dialog=document.querySelector('#submit-dialog');
 let total = 0;
-const key='tamil-maths-grade5-v1';
+const sampleMode = /^\/sample-quiz\/?$/.test(location.pathname);
+const key = sampleMode ? 'tamil-maths-grade5-sample-v1' : 'tamil-maths-grade5-v1';
 const fresh=(screen='home')=>({screen,index:0,answers:Array(total).fill('')});
 let state=fresh();
 function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch{}}
@@ -97,7 +98,7 @@ function render(focus=false){
           <div class="eyebrow">தமிழ் வழிப் பயிற்சி</div>
           <h1 tabindex="-1">தரம் 5 கணிதம்</h1>
           <p>20 வினாக்களுக்கு நீங்களே விடையளியுங்கள். சமர்ப்பித்த பின் பெறுபேற்றையும் ஒவ்வொரு விடைக்கான படிப்படியான விளக்கத்தையும் பாருங்கள்.</p>
-          <div class="entry-actions"><a lang="en" class="portal-button" href="/student">Student Login</a> <a lang="en" class="portal-secondary" href="/teacher">Teacher Login</a></div>
+          <div class="entry-actions"><a lang="en" class="portal-button" href="/sms-demo">Try SMS Login Demo</a> <a lang="en" class="portal-button" href="/student">Student Login</a> <a lang="en" class="portal-secondary" href="/teacher">Teacher Login</a></div>
         </div>
         <img class="landing-image" src="images/maths-desk.webp" alt="கணிதக் குறிப்பேடு, அளவுகோல், பென்சில் மற்றும் கோப்பை" fetchpriority="high">
       </section>
@@ -119,12 +120,12 @@ function render(focus=false){
   } else if(state.screen==='quiz'){
     const i=state.index,q=questions[i],value=state.answers[i];
     const control=q.options?q.options.map((option,j)=>'<label class="option"><input type="radio" name="answer" value="'+j+'" '+(value===String(j)?'checked':'')+'><span>'+option+'</span></label>').join(''):'<label for="numeric">எண்ணில் விடையை எழுதுக</label><input type="text" inputmode="numeric" autocomplete="off" id="numeric" maxlength="24" value="'+escape(value)+'">';
-    app.innerHTML='<a lang="en" class="quiz-return" href="/student">Back to Student Portal</a><div class="layout"><section class="card quiz-card"><div class="eyebrow">'+q.topic+' · வினா '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button lang="en" data-action="previous" '+(i===0?'disabled':'')+'>Previous Question</button>'+(i<total-1?'<button lang="en" class="primary" data-action="next">Next Question</button>':'<button lang="en" class="primary" data-action="review">Submit</button>')+'</div></section><aside class="card navigator-card"><h3>வினாக்கள்</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="வினாக்களைத் தெரிவு செய்க">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button lang="en" data-action="review">Submit</button></div>':'')+'</aside></div>';
+    app.innerHTML='<a lang="en" class="quiz-return" href="'+(sampleMode?'/sms-demo':'/student')+'">'+(sampleMode?'Back to SMS Demo':'Back to Student Portal')+'</a><div class="layout"><section class="card quiz-card"><div class="eyebrow">'+q.topic+' · வினா '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button lang="en" data-action="previous" '+(i===0?'disabled':'')+'>Previous Question</button>'+(i<total-1?'<button lang="en" class="primary" data-action="next">Next Question</button>':'<button lang="en" class="primary" data-action="review">Submit</button>')+'</div></section><aside class="card navigator-card"><h3>வினாக்கள்</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="வினாக்களைத் தெரிவு செய்க">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button lang="en" data-action="review">Submit</button></div>':'')+'</aside></div>';
     updateProgress();
   } else {
     const results=questions.map(status);
     const score=results.filter(value=>value==='correct').length;
-    app.innerHTML='<a lang="en" class="quiz-return" href="/student">Back to Student Portal</a>'+hero('உங்கள் பெறுபேறு','<div class="stats"><span><strong>'+score+' / '+total+'</strong> புள்ளிகள்</span><span>'+results.filter(value=>value==='incorrect').length+' தவறு</span><span>'+(total-count())+' விடையளிக்கவில்லை</span></div>')+
+    app.innerHTML='<a lang="en" class="quiz-return" href="'+(sampleMode?'/sms-demo':'/student')+'">'+(sampleMode?'Back to SMS Demo':'Back to Student Portal')+'</a>'+hero('உங்கள் பெறுபேறு','<div class="stats"><span><strong>'+score+' / '+total+'</strong> புள்ளிகள்</span><span>'+results.filter(value=>value==='incorrect').length+' தவறு</span><span>'+(total-count())+' விடையளிக்கவில்லை</span></div>')+
       '<section class="card"><h2>விடைகளும் விளக்கங்களும்</h2>'+questions.map((q,i)=>{
         const value=state.answers[i];
         const response=answered(value)?(q.options?.[Number(value)]??escape(value)):labels.unanswered;
@@ -150,7 +151,7 @@ app.addEventListener('input',event=>{
 });
 app.addEventListener('click',event=>{
   const button=event.target.closest('[data-action]');
-  if(!button || session?.role !== 'student') return;
+  if(!button || (!sampleMode && session?.role !== 'student')) return;
   switch(button.dataset.action){
     case 'resume': render(true); return;
     case 'start': state=fresh('quiz'); break;
@@ -169,7 +170,7 @@ app.addEventListener('click',event=>{
   render(true);
 });
 dialog.addEventListener('close',()=>{
-  if(dialog.returnValue!=='submit' || session?.role !== 'student') return;
+  if(dialog.returnValue!=='submit' || (!sampleMode && session?.role !== 'student')) return;
   state.screen='results';
   save();
   render(true);
@@ -274,7 +275,28 @@ document.querySelector('#logout').addEventListener('click', async () => {
     document.querySelector('#portal-notice').textContent = 'வெளியேற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
   }
 });
-if (protectedPage) {
+async function openSample() {
+  const response = await fetch('/api/sample-quiz');
+  if (!response.ok) throw new Error('Sample unavailable');
+  const data = await response.json();
+  questions = data.questions;
+  total = questions.length;
+  state = fresh('quiz');
+  try {
+    const saved = JSON.parse(localStorage.getItem(key));
+    if (saved && ['quiz','results'].includes(saved.screen) && Number.isInteger(saved.index) &&
+      saved.index >= 0 && saved.index < total && saved.answers?.length === total &&
+      saved.answers.every(value => typeof value === 'string')) state = saved;
+  } catch {}
+  render();
+}
+
+if (sampleMode) {
+  app.innerHTML = '<p role="status">மாதிரிப் பயிற்சி ஏற்றப்படுகிறது…</p>';
+  openSample().catch(() => {
+    app.innerHTML = '<section class="card"><p>மாதிரிப் பயிற்சியை ஏற்ற முடியவில்லை.</p><a lang="en" href="/sample-quiz">Try Again</a></section>';
+  });
+} else if (protectedPage) {
   app.innerHTML = '<p role="status">பகுதி ஏற்றப்படுகிறது…</p>';
   enterPortal().catch(() => login('பகுதியைத் திறக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'));
 } else {

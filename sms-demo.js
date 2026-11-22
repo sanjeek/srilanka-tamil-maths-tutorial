@@ -80,9 +80,9 @@ panel.addEventListener('submit', event => {
   challenge = undefined;
   notice.textContent = '';
   panel.innerHTML = `<h2 tabindex="-1">Demo sign-in successful</h2>
-    <p>Guardian mobile verified for this simulation. The sample Grade 5 student is ready to select.</p>
+    <p>Guardian mobile verified for this simulation. Continue as the sample Grade 5 student.</p>
     <div class="inbox"><strong>Sample Student</strong><br>Grade 5</div>
-    <div class="actions"><button class="primary" data-action="reset">Try Again</button></div>`;
+    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Grade 5 Sample</a><button data-action="reset">Try Again</button></div>`;
   panel.querySelector('h2').focus();
 });
 showNumber();
