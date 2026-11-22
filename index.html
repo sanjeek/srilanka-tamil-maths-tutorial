@@ -12,10 +12,21 @@
 header{background:#102d25}.bar,main,.site-footer{max-width:1200px;margin:auto;padding-inline:clamp(16px,4vw,40px)}.bar{min-height:78px}.brand{display:flex;align-items:center;gap:12px}.brand strong{display:block;font:700 clamp(.9rem,2.4vw,1.15rem)/1.2 system-ui}.teacher{display:block;margin-top:4px}.badge{flex-shrink:0;background:#e4efa9;text-align:center}
 .landing-hero{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:#103b2d;color:#fff;border-radius:26px;margin:20px 0 28px;min-height:430px}.landing-copy{align-self:center;padding:clamp(24px,5vw,64px)}.landing-copy .eyebrow{color:#ecf4be}.landing-copy h1{font-size:clamp(2rem,4.5vw,4rem);line-height:1.23;margin:14px 0;font-weight:800}.landing-copy p{color:#e0ece5;max-width:39ch;margin-bottom:25px}.landing-copy .primary{background:#e4efa9;border-color:#e4efa9;color:#123128}.landing-image{width:100%;height:100%;min-height:300px;object-fit:cover;display:block}.overview{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;margin-bottom:28px}.overview .card{margin:0}.guide{display:grid;gap:15px;list-style:none;padding:0;margin:0}.guide li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}.guide li span:first-child{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:var(--mint);color:var(--green);font-weight:800}.guide strong{display:block}.guide p{margin:3px 0 0;color:var(--muted)}.topics img{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:12px}.topic-list{display:flex;flex-wrap:wrap;gap:7px;list-style:none;margin:0;padding:0}.topic-list li{background:#edf4eb;padding:5px 10px;border-radius:8px;font-size:.875rem}.site-footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:18px;padding-bottom:24px;border-top:1px solid var(--line)}
 @media(max-width:750px){.landing-hero,.overview{grid-template-columns:1fr}.landing-hero{min-height:0}.landing-image{min-height:0;max-height:320px;aspect-ratio:16/9}.overview{gap:14px}}@media(max-width:400px){.badge{font-size:.75rem;padding-inline:8px}}
+
+.portal-nav{display:flex;align-items:center;gap:clamp(8px,3vw,26px);flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--line);padding:10px max(16px,calc((100vw - 1120px)/2))}
+.portal-nav a,.portal-login a{color:var(--green);font-weight:700}.portal-nav button{margin-left:auto}.portal-login{max-width:480px;margin:28px auto}.portal-login h1{margin:14px 0}.portal-login label{display:block;font-weight:700;margin-top:12px}.portal-login input{width:100%;padding:10px;border:1px solid var(--muted);border-radius:10px;margin:5px 0 0}.portal-login [role=alert]{min-height:1.65em;color:#a43b21;margin:9px 0}.portal-button,.portal-secondary{display:inline-flex;min-height:44px;align-items:center;border-radius:12px;padding:9px 13px;margin:2px 2px 2px 0;font-weight:700;text-decoration:none}.portal-button{background:#e4efa9;color:#123128}.portal-secondary{color:white;border:1px solid #a9c5b7}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}#portal-notice:not(:empty){padding:10px 18px;color:#a43b21}
 </style>
 </head>
 <body>
 <header><div class="bar"><div class="brand"><div><strong lang="en">Chithambara Maths Challenge</strong><span class="teacher">ஆசிரியர் — <span lang="en">K. Kavithan</span></span></div></div><span class="badge">மாதிரிப் பயிற்சி</span></div></header>
+<nav class="portal-nav" aria-label="முதன்மை வழிசெலுத்தல்">
+  <a href="/">முகப்பு</a>
+  <a href="/student">மாணவர் பகுதி</a>
+  <a href="/teacher">ஆசிரியர் பகுதி</a>
+  <button id="logout" hidden>வெளியேறு</button>
+</nav>
+<div id="portal-notice" role="status"></div>
 <main id="app"></main>
 <footer class="site-footer"><span lang="en">Chithambara Maths Challenge</span><span>ஆசிரியர் — <span lang="en">K. Kavithan</span></span></footer>
 <dialog id="submit-dialog" aria-labelledby="confirm-title">
@@ -24,41 +35,14 @@ header{background:#102d25}.bar,main,.site-footer{max-width:1200px;margin:auto;pa
 <form method="dialog" class="actions"><button value="cancel" autofocus>தொடர்ந்து பயிற்சி செய்க</button><button class="primary" value="submit">சமர்ப்பிக்கவும்</button></form>
 </dialog>
 <script type="module">
-const choice=(topic,prompt,options,answer,steps)=>({topic,prompt,options,answer:String(answer),solution:options[answer],steps});
-const number=(topic,prompt,answer,unit,steps)=>({topic,prompt,answer:String(answer),solution:answer.toLocaleString('en-LK')+' '+unit,steps});
 const arithmetic='எண்களும் கணக்கீடும்', fractions='பின்னங்கள்', measure='அளவீடு', practical='வாழ்க்கைக் கணிதம்';
-const questions=[
-choice(arithmetic,'36,482 என்ற எண்ணில் 6 இன் இடப்பெறுமானம் என்ன?',['60','600','6,000','60,000'],2,['வலப்புறத்திலிருந்து ஒன்றுகள், பத்துகள், நூறுகள், ஆயிரங்கள் என எண்ணுங்கள்.','6 ஆயிரங்கள் இடத்தில் உள்ளது. 6 × 1,000 = 6,000.']),
-choice(arithmetic,'4,758 + 2,689 = ?',['7,347','7,447','7,457','7,547'],1,['2,689 ஐ 2,000 + 600 + 80 + 9 எனப் பிரிக்கலாம்.','4,758 + 2,000 = 6,758. அடுத்து 600, 80, 9 ஆகியவற்றைக் கூட்டினால் 7,358 → 7,438 → 7,447.']),
-choice(arithmetic,'8,000 இலிருந்து 3,475 ஐக் கழித்தால் எவ்வளவு?',['4,425','4,475','4,525','5,525'],2,['முதலில் 3,000 ஐக் கழித்தால் 5,000.','400, 70, 5 ஆகியவற்றை முறையே கழித்தால் 4,600 → 4,530 → 4,525.']),
-choice(practical,'ஒரு பெட்டியில் 24 பென்சில்கள் உள்ளன. 6 பெட்டிகளில் மொத்தம் எத்தனை பென்சில்கள் இருக்கும்?',['120','124','140','144'],3,['24 ஐ 20 + 4 எனப் பிரிக்கலாம்.','20 × 6 = 120. 4 × 6 = 24.','மொத்தம் 120 + 24 = 144 பென்சில்கள்.']),
-choice(practical,'96 மாம்பழங்களை 8 கூடைகளில் சமமாகப் பகிர்ந்தால், ஒரு கூடையில் எத்தனை மாம்பழங்கள் இருக்கும்?',['10','12','14','16'],1,['சமமாகப் பகிர 96 ஐ 8 ஆல் வகுக்க வேண்டும்.','96 ÷ 8 = 12. சரிபார்க்க, 12 × 8 = 96.']),
-choice(fractions,'32 மாணவர்களில் ¼ பங்கினர் சதுரங்கம் விளையாடுகிறார்கள். எத்தனை பேர் விளையாடுகிறார்கள்?',['4','6','8','16'],2,['¼ என்பது நான்கு சம பங்குகளில் ஒரு பங்கு.','32 ÷ 4 = 8 மாணவர்கள்.']),
-choice(fractions,'⅜ + ⅛ எவ்வளவு?',['⅜','½','⅝','¾'],1,['இரு பின்னங்களிலும் கீழ் எண் 8.','மேல் எண்களைக் கூட்டுங்கள். (3 + 1) / 8 = 4/8.','எட்டில் நான்கு பங்கு என்பது அரைப் பங்கு.']),
-choice(measure,'2 மீற்றர் 35 சென்ரிமீற்றர் என்பது எத்தனை சென்ரிமீற்றர்?',['205','215','230','235'],3,['1 மீற்றர் = 100 சென்ரிமீற்றர்.','2 மீற்றர் = 200 சென்ரிமீற்றர்.','200 + 35 = 235 சென்ரிமீற்றர்.']),
-choice(measure,'ஒரு நிகழ்ச்சி காலை 9:20க்குத் தொடங்கி 45 நிமிடங்கள் நடைபெறுகிறது. அது எப்போது முடியும்?',['9:55','10:00','10:05','10:15'],2,['9:20 இலிருந்து 10:00 வரை 40 நிமிடங்கள்.','மீதமுள்ள 5 நிமிடங்களைக் கூட்டினால் காலை 10:05.']),
-choice(measure,'ஒரு செவ்வகத்தின் நீளம் 9 செ.மீ., அகலம் 4 செ.மீ. அதன் சுற்றளவு என்ன?',['13 செ.மீ.','18 செ.மீ.','26 செ.மீ.','36 செ.மீ.'],2,['சுற்றளவைக் காண நான்கு பக்கங்களின் நீளங்களையும் கூட்டுங்கள்.','9 + 4 + 9 + 4 = 26 செ.மீ.']),
-choice(practical,'ஒரு கொப்பியின் விலை ரூ. 85. மூன்று கொப்பிகளை வாங்க ரூ. 500 கொடுத்தால், மீதிப் பணம் எவ்வளவு?',['ரூ. 225','ரூ. 235','ரூ. 245','ரூ. 255'],2,['மூன்று கொப்பிகளின் விலை 3 × 85 = ரூ. 255.','மீதிப் பணம் 500 − 255 = ரூ. 245.']),
-choice(arithmetic,'7, 14, 21, 28, ___ என்ற தொடரில் அடுத்த எண் என்ன?',['32','34','35','36'],2,['ஒவ்வொரு எண்ணுடனும் 7 ஐக் கூட்டினால் அடுத்த எண் கிடைக்கிறது.','28 + 7 = 35.']),
-number(arithmetic,'7,648 ஐ அண்மித்த நூறுக்கு வட்டமிடுக.',7600,'',['பத்துகள் இடத்தில் 4 உள்ளது. அது 5 ஐ விடக் குறைவு.','நூறுகள் இடத்திலுள்ள 6 ஐ வைத்துக்கொண்டு, பத்துகள் மற்றும் ஒன்றுகள் இடங்களில் 0 எழுதுங்கள்.']),
-number(practical,'திங்கட்கிழமை 1,275 லீற்றர் நீரும் செவ்வாய்க்கிழமை 980 லீற்றர் நீரும் பயன்படுத்தப்பட்டது. மொத்தம் எத்தனை லீற்றர்?',2255,'லீற்றர்',['980 என்பது 1,000 ஐ விட 20 குறைவு.','1,275 + 1,000 = 2,275.','2,275 − 20 = 2,255 லீற்றர்.']),
-number(practical,'53 மாணவர்கள் சுற்றுலா செல்கிறார்கள். ஒரு வாகனத்தில் அதிகபட்சம் 8 மாணவர்கள் செல்லலாம். குறைந்தது எத்தனை வாகனங்கள் தேவை?',7,'வாகனங்கள்',['6 × 8 = 48. ஆறு வாகனங்களில் 48 மாணவர்கள் செல்லலாம்.','மீதமுள்ள 5 மாணவர்களுக்கு இன்னொரு வாகனம் தேவை.','6 + 1 = 7 வாகனங்கள்.']),
-number(measure,'1 கிலோகிராம் 250 கிராம் அரிசியுடன் 750 கிராம் அரிசியைச் சேர்த்தால் மொத்தம் எத்தனை கிலோகிராம்?',2,'கிலோகிராம்',['250 + 750 = 1,000 கிராம்.','1,000 கிராம் என்பது 1 கிலோகிராம்.','ஏற்கெனவே உள்ள 1 கிலோகிராமையும் சேர்த்தால் 2 கிலோகிராம்.']),
-number(measure,'ஒரு சதுரத்தின் ஒரு பக்க நீளம் 7 செ.மீ. அதன் பரப்பளவு எத்தனை சதுர சென்ரிமீற்றர்?',49,'சதுர சென்ரிமீற்றர்',['சதுரத்தின் நீளமும் அகலமும் 7 செ.மீ.','பரப்பளவு = நீளம் × அகலம் = 7 × 7 = 49 சதுர சென்ரிமீற்றர்.']),
-number(measure,'ஒரு குடத்தில் 3 லீற்றர் நீர் உள்ளது. அதிலிருந்து 850 மில்லிலீற்றரை எடுத்தால், எத்தனை மில்லிலீற்றர் மீதமிருக்கும்?',2150,'மில்லிலீற்றர்',['1 லீற்றர் = 1,000 மில்லிலீற்றர்.','3 லீற்றர் = 3,000 மில்லிலீற்றர்.','3,000 − 850 = 2,150 மில்லிலீற்றர்.']),
-number(fractions,'80 பக்க நூலில் கவின் முதல் நாள் ¼ பங்கையும் இரண்டாம் நாள் 20 பக்கங்களையும் வாசித்தான். இன்னும் எத்தனை பக்கங்கள் வாசிக்க வேண்டும்?',40,'பக்கங்கள்',['முதல் நாள் 80 ÷ 4 = 20 பக்கங்கள்.','இரண்டு நாட்களிலும் 20 + 20 = 40 பக்கங்கள் வாசித்தான்.','மீதம் 80 − 40 = 40 பக்கங்கள்.']),
-number(practical,'மூன்று நாட்களில் முறையே 18, 25, 17 கொப்பிகள் விற்கப்பட்டன. ஒரு கொப்பியின் விலை ரூ. 50 எனில், மொத்த விற்பனைத் தொகை எத்தனை ரூபாய்?',3000,'ரூபாய்',['விற்கப்பட்ட கொப்பிகளின் எண்ணிக்கை 18 + 25 + 17 = 60.','60 × 50 = 3,000 ரூபாய்.'])
-];
+let questions = [];
 const app=document.querySelector('#app');
 const dialog=document.querySelector('#submit-dialog');
-const total=questions.length;
+let total = 0;
 const key='tamil-maths-grade5-v1';
 const fresh=(screen='home')=>({screen,index:0,answers:Array(total).fill('')});
 let state=fresh();
-try {
-  const saved=JSON.parse(localStorage.getItem(key));
-  if(saved && ['quiz','results'].includes(saved.screen) && Number.isInteger(saved.index) && saved.index>=0 && saved.index<total && saved.answers?.length===total && saved.answers.every(value=>typeof value==='string')) state=saved;
-} catch {}
 function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch{}}
 const answered=value=>value.trim()!=='';
 const normalize=value=>value.trim().replace(/[௦-௯]/g,digit=>String(digit.charCodeAt(0)-0x0be6)).replace(/[,\s]/g,'').replace(/^0+(?=\d)/,'');
@@ -76,7 +60,7 @@ function render(focus=false){
           <div class="eyebrow">தமிழ் வழிப் பயிற்சி</div>
           <h1 tabindex="-1">தரம் 5 கணிதம்</h1>
           <p>20 வினாக்களுக்கு நீங்களே விடையளியுங்கள். சமர்ப்பித்த பின் பெறுபேற்றையும் ஒவ்வொரு விடைக்கான படிப்படியான விளக்கத்தையும் பாருங்கள்.</p>
-          <button class="primary" data-action="start">பயிற்சியைத் தொடங்குக</button>
+          <a class="portal-button" href="/student">மாணவர் உள்நுழைவு</a> <a class="portal-secondary" href="/teacher">ஆசிரியர் உள்நுழைவு</a>
         </div>
         <img class="landing-image" src="images/maths-desk.webp" alt="கணிதக் குறிப்பேடு, அளவுகோல், பென்சில் மற்றும் கோப்பை" fetchpriority="high">
       </section>
@@ -129,8 +113,9 @@ app.addEventListener('input',event=>{
 });
 app.addEventListener('click',event=>{
   const button=event.target.closest('[data-action]');
-  if(!button) return;
+  if(!button || session?.role !== 'student') return;
   switch(button.dataset.action){
+    case 'resume': render(true); return;
     case 'start': state=fresh('quiz'); break;
     case 'previous': state.index--; break;
     case 'next': state.index++; break;
@@ -147,12 +132,115 @@ app.addEventListener('click',event=>{
   render(true);
 });
 dialog.addEventListener('close',()=>{
-  if(dialog.returnValue!=='submit') return;
+  if(dialog.returnValue!=='submit' || session?.role !== 'student') return;
   state.screen='results';
   save();
   render(true);
 });
-render();
+const portal = location.pathname.replace(/^\/|\/$/g, '');
+const protectedPage = portal === 'student' || portal === 'teacher';
+let session;
+
+function login(message = '') {
+  app.innerHTML = `<section class="portal-login card">
+    <a href="/">முகப்பு</a>
+    <h1>${portal === 'teacher' ? 'ஆசிரியர் உள்நுழைவு' : 'மாணவர் உள்நுழைவு'}</h1>
+    <p>உங்கள் மாதிரிக் கணக்கைப் பயன்படுத்தி உள்நுழையுங்கள்.</p>
+    <form id="login-form">
+      <label for="username">பயனர் பெயர்</label>
+      <input id="username" name="username" value="${portal}" autocomplete="username" required maxlength="32">
+      <label for="password">கடவுச்சொல்</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128">
+      <p id="login-error" role="alert">${message}</p>
+      <button class="primary">உள்நுழையுங்கள்</button>
+    </form>
+  </section>`;
+}
+
+function dashboard() {
+  document.querySelector('#logout').hidden = false;
+  if (session.role === 'teacher') {
+    const rows = session.classReport;
+    const complete = rows.filter(row => row.score !== null);
+    const average = complete.length ? (complete.reduce((sum, row) => sum + row.score, 0) / complete.length).toFixed(1) : '—';
+    app.innerHTML = hero('ஆசிரியர் பகுதி', '<p>' + escape(session.name) + ' · தரம் 5 கணிதம்</p><div class="stats"><span>மாணவர்கள் <strong>' + rows.length + '</strong></span><span>சமர்ப்பிப்புகள் <strong>' + complete.length + '</strong></span><span>சராசரி <strong>' + average + ' / 20</strong></span></div>') +
+      '<section class="card"><h2>வகுப்புப் பெறுபேறுகள்</h2><p>காட்சிக்கான மாதிரித் தரவு</p><table><thead><tr><th scope="col">மாணவர்</th><th scope="col">பெறுபேறு</th></tr></thead><tbody>' +
+      rows.map(row => '<tr><td>' + escape(row.name) + '</td><td>' + (row.score === null ? 'சமர்ப்பிக்கவில்லை' : row.score + ' / 20') + '</td></tr>').join('') + '</tbody></table></section>';
+    return;
+  }
+  const hasAttempt = ['quiz', 'results'].includes(state.screen);
+  const summary = state.screen === 'results'
+    ? questions.filter((q, i) => status(q, i) === 'correct').length + ' / ' + total + ' புள்ளிகள்'
+    : count() + ' / ' + total + ' விடையளிக்கப்பட்டவை';
+  const action = state.screen === 'results' ? 'பெறுபேற்றைப் பாருங்கள்' : hasAttempt ? 'பயிற்சியைத் தொடருங்கள்' : 'பயிற்சியைத் தொடங்குங்கள்';
+  app.innerHTML = hero('மாணவர் பகுதி', '<p>' + escape(session.name) + ' · தமிழ் வழிப் பயிற்சி</p>') +
+    '<section class="card"><h2>தரம் 5 கணிதம்</h2><p>' + summary + '</p><button class="primary" data-action="' + (hasAttempt ? 'resume' : 'start') + '">' + action + '</button></section>';
+}
+
+async function portalRequest(body) {
+  return fetch('/api/portal', body ? {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+  } : { cache: 'no-store' });
+}
+
+async function enterPortal() {
+  const response = await portalRequest();
+  if (response.status === 401) return login();
+  if (!response.ok) throw new Error('Portal unavailable');
+  const account = await response.json();
+  if (account.role !== portal) return login('இந்தப் பகுதிக்குரிய கணக்கில் உள்நுழையுங்கள்.');
+  session = account;
+  if (session.role === 'student') {
+    questions = session.questions;
+    total = questions.length;
+    state = fresh();
+    try {
+      const saved = JSON.parse(localStorage.getItem(key));
+      if (saved && ['quiz','results'].includes(saved.screen) && Number.isInteger(saved.index) &&
+        saved.index >= 0 && saved.index < total && saved.answers?.length === total &&
+        saved.answers.every(value => typeof value === 'string')) state = saved;
+    } catch {}
+  }
+  dashboard();
+}
+
+app.addEventListener('submit', async event => {
+  if (event.target.id !== 'login-form') return;
+  event.preventDefault();
+  const values = new FormData(event.target);
+  const button = event.target.querySelector('button');
+  const error = event.target.querySelector('[role=alert]');
+  button.disabled = true;
+  error.textContent = '';
+  try {
+    const response = await portalRequest({ action: 'login', portal, username: values.get('username').trim(), password: values.get('password') });
+    if (response.status === 401) {
+      error.textContent = 'பயனர் பெயர் அல்லது கடவுச்சொல் தவறாக உள்ளது.';
+      return;
+    }
+    if (!response.ok) throw new Error('Login unavailable');
+    await enterPortal();
+  } catch {
+    error.textContent = 'இப்போது உள்நுழைய முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
+  } finally {
+    button.disabled = false;
+  }
+});
+document.querySelector('#logout').addEventListener('click', async () => {
+  try {
+    const response = await portalRequest({ action: 'logout' });
+    if (response.ok) location.assign('/');
+    else throw new Error('Logout failed');
+  } catch {
+    document.querySelector('#portal-notice').textContent = 'வெளியேற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
+  }
+});
+if (protectedPage) {
+  app.innerHTML = '<p role="status">பகுதி ஏற்றப்படுகிறது…</p>';
+  enterPortal().catch(() => login('பகுதியைத் திறக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'));
+} else {
+  render();
+}
 </script>
 </body>
 </html>
