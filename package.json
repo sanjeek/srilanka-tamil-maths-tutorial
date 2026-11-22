@@ -1,0 +1,30 @@
+{
+  "name": "chithambara-maths-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node --test",
+    "preview": "node --env-file-if-exists=.env scripts/preview.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjeek/srilanka-tamil-maths-tutorial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sanjeek/srilanka-tamil-maths-tutorial/issues"
+  },
+  "homepage": "https://github.com/sanjeek/srilanka-tamil-maths-tutorial#readme",
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.17",
+    "libphonenumber-js": "^1.13.17",
+    "pg": "^8.23.1"
+  }
+}
