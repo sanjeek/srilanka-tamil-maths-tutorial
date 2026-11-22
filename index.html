@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ta">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#172d29">
-<title>தரம் 5 கணிதம் | Chithambara Maths Challenge</title>
+<title>Grade 5 Maths | Chithambara Maths Challenge</title>
 <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap');
 :root{color-scheme:light;--ink:#172d29;--green:#126651;--mint:#e5f5ed;--paper:#f3f6f4;--line:#d9e4df;--muted:#45615a}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.65 "Noto Sans Tamil",system-ui,sans-serif}header{background:#172d29;color:white}.bar,main,footer{max-width:1040px;margin:auto;padding:16px 24px}.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700}.teacher{font-weight:500;font-size:.875rem;color:#d7e8e1}.badge{color:#172d29;background:#d8f795;padding:4px 12px;border-radius:100px;font-size:.875rem}.hero{position:relative;overflow:hidden;background:#e3f2e9;border:1px solid var(--line);border-radius:24px;padding:clamp(24px,5vw,54px);margin:24px 0}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.2;margin:12px 0}.hero p{max-width:560px;color:var(--muted)}.hero-art{position:absolute;right:35px;top:22px;color:#126651;font:bold clamp(42px,8vw,100px)/1 Georgia;opacity:.15;letter-spacing:-.1em;pointer-events:none}button,input{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 16px;background:white;color:var(--ink);font-weight:700;min-height:44px}button.primary{background:var(--green);border-color:var(--green);color:white}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:3px solid #ad5607;outline-offset:3px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px;align-items:start}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:clamp(16px,3vw,28px);margin-bottom:16px}h2,h3,p{margin-top:0}h2{line-height:1.5}h3{margin-bottom:12px}.eyebrow{color:var(--green);font-weight:750}.actions,.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.navigator{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.navigator button{padding:6px}.navigator .done{background:var(--mint);border-color:#94c9b5}.navigator [aria-current]{box-shadow: inset 0 0 0 2px var(--green)}label.option{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;min-height:48px;cursor:pointer}label.option:has(input:checked){background:var(--mint);border-color:var(--green)}input[type=radio]{accent-color:var(--green);width:18px;height:18px}input[type=text]{width:min(100%,320px);display:block;border:1px solid var(--muted);border-radius:10px;padding:10px;margin-top:8px}progress{display:block;width:100%;accent-color:var(--green);height:10px;margin:8px 0 18px}.stats>span{background:var(--mint);padding:8px 12px;border-radius:10px}.result-question{border-top:1px solid var(--line);padding:18px 0}.result-question h3{margin-bottom:8px}.result-question p,.result-question ol{margin-bottom:10px}.result-question ol{padding-inline-start:24px}.status{display:inline-block;margin-left:8px;font-size:.875rem;color:var(--muted)}.correct{color:var(--green)}.incorrect{color:#a43b21}footer{color:var(--muted);font-size:.875rem}dialog{width:min(480px,calc(100% - 32px));border:1px solid var(--line);border-radius:18px;padding:22px;color:var(--ink)}dialog::backdrop{background:#172d2994}@media(max-width:720px){.layout{grid-template-columns:1fr}.bar,main,footer{padding-left:14px;padding-right:14px}.hero-art{right:20px}.navigator{grid-template-columns:repeat(10,1fr)}}@media(max-width:550px){.navigator{grid-template-columns:repeat(5,1fr)}}
@@ -56,23 +56,23 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px
 </style>
 </head>
 <body>
-<header><div class="bar"><div class="brand"><div><strong lang="en">Chithambara Maths Challenge</strong><span class="teacher">ஆசிரியர் — <span lang="en">K. Kavithan</span></span></div></div><span class="badge">மாதிரிப் பயிற்சி</span></div></header>
-<nav class="portal-nav" aria-label="முதன்மை வழிசெலுத்தல்">
-  <a href="/">முகப்பு</a>
-  <a href="/student">மாணவர் பகுதி</a>
-  <a href="/teacher">ஆசிரியர் பகுதி</a>
-  <button id="logout" hidden>வெளியேறு</button>
+<header><div class="bar"><div class="brand"><div><strong lang="en">Chithambara Maths Challenge</strong><span class="teacher">Teacher — <span lang="en">K. Kavithan</span></span></div></div><span class="badge">Demo quiz</span></div></header>
+<nav class="portal-nav" aria-label="Main navigation">
+  <a href="/">Home</a>
+  <a href="/student">Student Portal</a>
+  <a href="/teacher">Teacher Portal</a>
+  <button id="logout" hidden>Log Out</button>
 </nav>
 <div id="portal-notice" role="status"></div>
 <main id="app"></main>
-<footer class="site-footer"><span lang="en">Chithambara Maths Challenge</span><span>ஆசிரியர் — <span lang="en">K. Kavithan</span></span></footer>
+<footer class="site-footer"><span lang="en">Chithambara Maths Challenge</span><span>Teacher — <span lang="en">K. Kavithan</span></span></footer>
 <dialog id="submit-dialog" aria-labelledby="confirm-title">
-<h2 id="confirm-title">பயிற்சியைச் சமர்ப்பிக்கலாமா?</h2>
+<h2 id="confirm-title">Submit the quiz?</h2>
 <p id="confirm-text"></p>
-<form method="dialog" class="actions"><button value="cancel" autofocus>தொடர்ந்து பயிற்சி செய்க</button><button class="primary" value="submit">சமர்ப்பிக்கவும்</button></form>
+<form method="dialog" class="actions"><button value="cancel" autofocus>Keep Working</button><button class="primary" value="submit">Submit</button></form>
 </dialog>
 <script type="module">
-const arithmetic='எண்களும் கணக்கீடும்', fractions='பின்னங்கள்', measure='அளவீடு', practical='வாழ்க்கைக் கணிதம்';
+const arithmetic='Numbers and Operations', fractions='Fractions', measure='Measurement', practical='Everyday Maths';
 let questions = [];
 const app=document.querySelector('#app');
 const dialog=document.querySelector('#submit-dialog');
@@ -85,61 +85,61 @@ const answered=value=>value.trim()!=='';
 const normalize=value=>value.trim().replace(/[௦-௯]/g,digit=>String(digit.charCodeAt(0)-0x0be6)).replace(/[,\s]/g,'').replace(/^0+(?=\d)/,'');
 const count=()=>state.answers.filter(answered).length;
 const status=(q,i)=>!answered(state.answers[i])?'unanswered':(q.options?state.answers[i]:normalize(state.answers[i]))===q.answer?'correct':'incorrect';
-const labels={correct:'சரி',incorrect:'தவறு',unanswered:'விடையளிக்கவில்லை'};
+const labels={correct:'Correct',incorrect:'Incorrect',unanswered:'Unanswered'};
 const escape=value=>value.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const hero=(title,body)=>'<section class="hero"><span class="hero-art" aria-hidden="true">× +</span><div class="eyebrow">தமிழ் வழிப் பயிற்சி</div><h1 tabindex="-1">'+title+'</h1>'+body+'</section>';
+const hero=(title,body)=>'<section class="hero"><span class="hero-art" aria-hidden="true">× +</span><div class="eyebrow">Tamil Maths Practice</div><h1 tabindex="-1">'+title+'</h1>'+body+'</section>';
 function render(focus=false){
   if(state.screen==='home'){
 
     app.innerHTML=`
       <section class="landing-hero">
         <div class="landing-copy">
-          <div class="eyebrow">தமிழ் வழிப் பயிற்சி</div>
-          <h1 tabindex="-1">தரம் 5 கணிதம்</h1>
-          <p>20 வினாக்களுக்கு நீங்களே விடையளியுங்கள். சமர்ப்பித்த பின் பெறுபேற்றையும் ஒவ்வொரு விடைக்கான படிப்படியான விளக்கத்தையும் பாருங்கள்.</p>
-          <div class="entry-actions"><a class="portal-button" href="/student">மாணவர் உள்நுழைவு</a> <a class="portal-secondary" href="/teacher">ஆசிரியர் உள்நுழைவு</a></div>
+          <div class="eyebrow">Tamil Maths Practice</div>
+          <h1 tabindex="-1">Grade 5 Maths</h1>
+          <p>Answer 20 questions in Tamil, then submit to see your score and worked solutions.</p>
+          <div class="entry-actions"><a class="portal-button" href="/student">Student Login</a> <a class="portal-secondary" href="/teacher">Teacher Login</a></div>
         </div>
-        <img class="landing-image" src="images/maths-desk.webp" alt="கணிதக் குறிப்பேடு, அளவுகோல், பென்சில் மற்றும் கோப்பை" fetchpriority="high">
+        <img class="landing-image" src="images/maths-desk.webp" alt="Maths notebook, ruler, pencil and trophy" fetchpriority="high">
       </section>
       <div class="overview">
         <section class="card">
-          <h2>பயிற்சி செய்வது எப்படி?</h2>
+          <h2>How It Works</h2>
           <ol class="guide">
-            <li><span aria-hidden="true">1</span><div><strong>விடையளியுங்கள்</strong><p>வினாக்களுக்கு உங்கள் வேகத்தில் விடையளியுங்கள்.</p></div></li>
-            <li><span aria-hidden="true">2</span><div><strong>சமர்ப்பியுங்கள்</strong><p>20 புள்ளிகளுக்கான உங்கள் பெறுபேற்றைப் பாருங்கள்.</p></div></li>
-            <li><span aria-hidden="true">3</span><div><strong>விளக்கத்தைப் பாருங்கள்</strong><p>கணக்கிடும் முறையை அறிய ஒவ்வொரு வினாவையும் திறக்கவும்.</p></div></li>
+            <li><span aria-hidden="true">1</span><div><strong>Answer the Questions</strong><p>Work through the questions at your own pace.</p></div></li>
+            <li><span aria-hidden="true">2</span><div><strong>Submit the Quiz</strong><p>See your score out of 20.</p></div></li>
+            <li><span aria-hidden="true">3</span><div><strong>Review the Solutions</strong><p>Scroll down to read the steps for every question.</p></div></li>
           </ol>
         </section>
         <section class="card topics">
-          <img src="images/maths-practice.webp" alt="குறிப்பேட்டில் வடிவியல் பயிற்சி செய்யும் மாணவர்" loading="lazy">
-          <h2>பயிற்சித் தலைப்புகள்</h2>
+          <img src="images/maths-practice.webp" alt="Student practising geometry in a notebook" loading="lazy">
+          <h2>Topics</h2>
           <ul class="topic-list">${[arithmetic,fractions,measure,practical].map(topic=>`<li>${topic}</li>`).join('')}</ul>
         </section>
       </div>`;
   } else if(state.screen==='quiz'){
     const i=state.index,q=questions[i],value=state.answers[i];
-    const control=q.options?q.options.map((option,j)=>'<label class="option"><input type="radio" name="answer" value="'+j+'" '+(value===String(j)?'checked':'')+'><span>'+option+'</span></label>').join(''):'<label for="numeric">எண்ணில் விடையை எழுதுக</label><input type="text" inputmode="numeric" autocomplete="off" id="numeric" maxlength="24" value="'+escape(value)+'">';
-    app.innerHTML='<a class="quiz-return" href="/student">மாணவர் பகுதி</a><div class="layout"><section class="card quiz-card"><div class="eyebrow">'+q.topic+' · வினா '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button data-action="previous" '+(i===0?'disabled':'')+'>முந்தைய வினா</button>'+(i<total-1?'<button class="primary" data-action="next">அடுத்த வினா</button>':'<button class="primary" data-action="review">சமர்ப்பிக்கவும்</button>')+'</div></section><aside class="card navigator-card"><h3>வினாக்கள்</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="வினாக்களைத் தெரிவு செய்க">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button data-action="review">சமர்ப்பிக்கவும்</button></div>':'')+'</aside></div>';
+    const control=q.options?q.options.map((option,j)=>'<label class="option"><input type="radio" name="answer" value="'+j+'" '+(value===String(j)?'checked':'')+'><span lang="ta">'+option+'</span></label>').join(''):'<label for="numeric">Enter your answer as a number</label><input type="text" inputmode="numeric" autocomplete="off" id="numeric" maxlength="24" value="'+escape(value)+'">';
+    app.innerHTML='<a class="quiz-return" href="/student">Back to Student Portal</a><div class="layout"><section class="card quiz-card"><div class="eyebrow">'+q.topic+' · Question '+(i+1)+' / '+total+'</div><h2 tabindex="-1" id="question" lang="ta">'+q.prompt+'</h2><div role="group" aria-labelledby="question">'+control+'</div><div class="actions"><button data-action="previous" '+(i===0?'disabled':'')+'>Previous Question</button>'+(i<total-1?'<button class="primary" data-action="next">Next Question</button>':'<button class="primary" data-action="review">Submit</button>')+'</div></section><aside class="card navigator-card"><h3>Questions</h3><p id="progress-label"></p><progress id="progress" max="'+total+'" aria-labelledby="progress-label"></progress><nav class="navigator" aria-label="Choose a question">'+questions.map((_,j)=>'<button data-action="jump" data-index="'+j+'" '+(i===j?'aria-current="step"':'')+'>'+(j+1)+'</button>').join('')+'</nav>'+(i<total-1?'<div class="actions"><button data-action="review">Submit</button></div>':'')+'</aside></div>';
     updateProgress();
   } else {
     const results=questions.map(status);
     const score=results.filter(value=>value==='correct').length;
-    app.innerHTML='<a class="quiz-return" href="/student">மாணவர் பகுதி</a>'+hero('உங்கள் பெறுபேறு','<div class="stats"><span><strong>'+score+' / '+total+'</strong> புள்ளிகள்</span><span>'+results.filter(value=>value==='incorrect').length+' தவறு</span><span>'+(total-count())+' விடையளிக்கவில்லை</span></div>')+
-      '<section class="card"><h2>விடைகளும் விளக்கங்களும்</h2>'+questions.map((q,i)=>{
+    app.innerHTML='<a class="quiz-return" href="/student">Back to Student Portal</a>'+hero('Your Results','<div class="stats"><span><strong>'+score+' / '+total+'</strong> points</span><span>'+results.filter(value=>value==='incorrect').length+' incorrect</span><span>'+(total-count())+' unanswered</span></div>')+
+      '<section class="card"><h2>Answers and Explanations</h2>'+questions.map((q,i)=>{
         const value=state.answers[i];
         const response=answered(value)?(q.options?.[Number(value)]??escape(value)):labels.unanswered;
-        return '<article class="result-question"><h3>வினா '+(i+1)+' · '+q.topic+' <span class="status '+results[i]+'">'+labels[results[i]]+'</span></h3><p><strong>'+q.prompt+'</strong></p><p>உங்கள் விடை — '+response+'</p><p>சரியான விடை — <strong>'+q.solution+'</strong></p><h4>விளக்கம்</h4><ol>'+q.steps.map(step=>'<li>'+step+'</li>').join('')+'</ol></article>';
-      }).join('')+'<div class="actions"><button class="primary" data-action="start">மீண்டும் பயிற்சி செய்க</button></div></section>';
+        return '<article class="result-question"><h3>Question '+(i+1)+' · '+q.topic+' <span class="status '+results[i]+'">'+labels[results[i]]+'</span></h3><p lang="ta"><strong>'+q.prompt+'</strong></p><p>Your answer — '+response+'</p><p>Correct answer — <strong>'+q.solution+'</strong></p><h4>Explanation</h4><ol>'+q.steps.map(step=>'<li>'+step+'</li>').join('')+'</ol></article>';
+      }).join('')+'<div class="actions"><button class="primary" data-action="start">Try Again</button></div></section>';
   }
   if(focus) app.querySelector('h1,h2')?.focus();
 }
 function updateProgress(){
-  document.querySelector('#progress-label').textContent=count()+' / '+total+' விடையளிக்கப்பட்டவை';
+  document.querySelector('#progress-label').textContent=count()+' / '+total+' answered';
   document.querySelector('#progress').value=count();
   app.querySelectorAll('[data-index]').forEach((button,i)=>{
     const done=answered(state.answers[i]);
     button.classList.toggle('done',done);
-    button.setAttribute('aria-label','வினா '+(i+1)+' · '+(done?'விடையளிக்கப்பட்டது':labels.unanswered));
+    button.setAttribute('aria-label','Question '+(i+1)+' · '+(done?'Answered':labels.unanswered));
   });
 }
 app.addEventListener('input',event=>{
@@ -159,7 +159,7 @@ app.addEventListener('click',event=>{
     case 'jump': state.index=Number(button.dataset.index); break;
     case 'review': {
       const remaining=total-count();
-      document.querySelector('#confirm-text').textContent=remaining?remaining+' வினாக்களுக்கு இன்னும் விடையளிக்கவில்லை. சமர்ப்பித்ததும் பெறுபேற்றைப் பார்க்கலாம்.':'அனைத்து வினாக்களுக்கும் விடையளித்துள்ளீர்கள். சமர்ப்பித்ததும் பெறுபேற்றைப் பார்க்கலாம்.';
+      document.querySelector('#confirm-text').textContent=remaining?remaining+' questions still unanswered. You can view your results after submitting.':'You have answered every question. Submit to see your results.';
       dialog.returnValue='';
       dialog.showModal();
       return;
@@ -182,16 +182,16 @@ let session;
 
 function login(message = '') {
   app.innerHTML = `<section class="portal-login card">
-    <a href="/">முகப்பு</a>
-    <h1>${portal === 'teacher' ? 'ஆசிரியர் உள்நுழைவு' : 'மாணவர் உள்நுழைவு'}</h1>
-    <p>உங்கள் மாதிரிக் கணக்கைப் பயன்படுத்தி உள்நுழையுங்கள்.</p>
+    <a href="/">Home</a>
+    <h1>${portal === 'teacher' ? 'Teacher Login' : 'Student Login'}</h1>
+    <p>Sign in with your demo account.</p>
     <form id="login-form">
-      <label for="username">பயனர் பெயர்</label>
+      <label for="username">Username</label>
       <input id="username" name="username" value="${portal}" autocomplete="username" required maxlength="32">
-      <label for="password">கடவுச்சொல்</label>
+      <label for="password">Password</label>
       <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128">
       <p id="login-error" role="alert">${message}</p>
-      <button class="primary">உள்நுழையுங்கள்</button>
+      <button class="primary">Log In</button>
     </form>
   </section>`;
 }
@@ -202,18 +202,18 @@ function dashboard() {
     const rows = session.classReport;
     const complete = rows.filter(row => row.score !== null);
     const average = complete.length ? (complete.reduce((sum, row) => sum + row.score, 0) / complete.length).toFixed(1) : '—';
-    app.innerHTML = hero('ஆசிரியர் பகுதி', '<p>' + escape(session.name) + ' · தரம் 5 கணிதம்</p><div class="stats"><span>மாணவர்கள் <strong>' + rows.length + '</strong></span><span>சமர்ப்பிப்புகள் <strong>' + complete.length + '</strong></span><span>சராசரி <strong>' + average + ' / 20</strong></span></div>') +
-      '<section class="card"><h2>வகுப்புப் பெறுபேறுகள்</h2><p>காட்சிக்கான மாதிரித் தரவு</p><table><thead><tr><th scope="col">மாணவர்</th><th scope="col">பெறுபேறு</th></tr></thead><tbody>' +
-      rows.map(row => '<tr><td>' + escape(row.name) + '</td><td>' + (row.score === null ? 'சமர்ப்பிக்கவில்லை' : row.score + ' / 20') + '</td></tr>').join('') + '</tbody></table></section>';
+    app.innerHTML = hero('Teacher Portal', '<p>' + escape(session.name) + ' · Grade 5 Maths</p><div class="stats"><span>Students <strong>' + rows.length + '</strong></span><span>Submissions <strong>' + complete.length + '</strong></span><span>Average <strong>' + average + ' / 20</strong></span></div>') +
+      '<section class="card"><h2>Class Results</h2><p>Sample data for the demo</p><table><thead><tr><th scope="col">Student</th><th scope="col">Score</th></tr></thead><tbody>' +
+      rows.map(row => '<tr><td>' + escape(row.name) + '</td><td>' + (row.score === null ? 'Not submitted' : row.score + ' / 20') + '</td></tr>').join('') + '</tbody></table></section>';
     return;
   }
   const hasAttempt = ['quiz', 'results'].includes(state.screen);
   const summary = state.screen === 'results'
-    ? questions.filter((q, i) => status(q, i) === 'correct').length + ' / ' + total + ' புள்ளிகள்'
-    : count() + ' / ' + total + ' விடையளிக்கப்பட்டவை';
-  const action = state.screen === 'results' ? 'பெறுபேற்றைப் பாருங்கள்' : hasAttempt ? 'பயிற்சியைத் தொடருங்கள்' : 'பயிற்சியைத் தொடங்குங்கள்';
-  app.innerHTML = hero('மாணவர் பகுதி', '<p>' + escape(session.name) + ' · தமிழ் வழிப் பயிற்சி</p>') +
-    '<section class="card"><h2>தரம் 5 கணிதம்</h2><p>' + summary + '</p><button class="primary dashboard-action" data-action="' + (hasAttempt ? 'resume' : 'start') + '">' + action + '</button></section>';
+    ? questions.filter((q, i) => status(q, i) === 'correct').length + ' / ' + total + ' points'
+    : count() + ' / ' + total + ' answered';
+  const action = state.screen === 'results' ? 'View Results' : hasAttempt ? 'Resume Quiz' : 'Start Quiz';
+  app.innerHTML = hero('Student Portal', '<p>' + escape(session.name) + ' · Tamil Maths Practice</p>') +
+    '<section class="card"><h2>Grade 5 Maths</h2><p>' + summary + '</p><button class="primary dashboard-action" data-action="' + (hasAttempt ? 'resume' : 'start') + '">' + action + '</button></section>';
 }
 
 async function portalRequest(body) {
@@ -227,7 +227,7 @@ async function enterPortal() {
   if (response.status === 401) return login();
   if (!response.ok) throw new Error('Portal unavailable');
   const account = await response.json();
-  if (account.role !== portal) return login('இந்தப் பகுதிக்குரிய கணக்கில் உள்நுழையுங்கள்.');
+  if (account.role !== portal) return login('Sign in with the account for this portal.');
   session = account;
   if (session.role === 'student') {
     questions = session.questions;
@@ -254,13 +254,13 @@ app.addEventListener('submit', async event => {
   try {
     const response = await portalRequest({ action: 'login', portal, username: values.get('username').trim(), password: values.get('password') });
     if (response.status === 401) {
-      error.textContent = 'பயனர் பெயர் அல்லது கடவுச்சொல் தவறாக உள்ளது.';
+      error.textContent = 'The username or password is incorrect.';
       return;
     }
     if (!response.ok) throw new Error('Login unavailable');
     await enterPortal();
   } catch {
-    error.textContent = 'இப்போது உள்நுழைய முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
+    error.textContent = 'Could not sign in. Please try again.';
   } finally {
     button.disabled = false;
   }
@@ -271,12 +271,12 @@ document.querySelector('#logout').addEventListener('click', async () => {
     if (response.ok) location.assign('/');
     else throw new Error('Logout failed');
   } catch {
-    document.querySelector('#portal-notice').textContent = 'வெளியேற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
+    document.querySelector('#portal-notice').textContent = 'Could not log out. Please try again.';
   }
 });
 if (protectedPage) {
-  app.innerHTML = '<p role="status">பகுதி ஏற்றப்படுகிறது…</p>';
-  enterPortal().catch(() => login('பகுதியைத் திறக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'));
+  app.innerHTML = '<p role="status">Loading portal…</p>';
+  enterPortal().catch(() => login('Could not load the portal. Please try again.'));
 } else {
   render();
 }
