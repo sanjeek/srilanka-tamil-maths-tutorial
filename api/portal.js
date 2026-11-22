@@ -5,7 +5,7 @@ const questions = require('../lib/questions');
 const cookieName = '__Host-cmc-session';
 const lifetime = 8 * 60 * 60;
 const accounts = {
-  student: { name: 'Demo Student', env: 'PORTAL_STUDENT_PASSWORD' },
+  student: { name: 'மாதிரி மாணவர்', env: 'PORTAL_STUDENT_PASSWORD' },
   teacher: { name: 'K. Kavithan', env: 'PORTAL_TEACHER_PASSWORD' }
 };
 const hash = value => createHash('sha256').update(value).digest();
@@ -32,9 +32,9 @@ module.exports = (req, res) => {
     if (role === 'student') account.questions = questions;
     if (role === 'teacher') {
       account.classReport = [
-        { name: 'Student 01', score: 18 },
-        { name: 'Student 02', score: 15 },
-        { name: 'Student 03', score: null }
+        { name: 'மாணவர் 01', score: 18 },
+        { name: 'மாணவர் 02', score: 15 },
+        { name: 'மாணவர் 03', score: null }
       ];
     }
     return reply(res, 200, account);
