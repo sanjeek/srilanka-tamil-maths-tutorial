@@ -1,6 +1,16 @@
 {
   "rewrites": [
-    { "source": "/student", "destination": "/index.html" },
-    { "source": "/teacher", "destination": "/index.html" }
+    {
+      "source": "/student",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/teacher",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/english",
+      "destination": "/english.html"
+    }
   ]
 }

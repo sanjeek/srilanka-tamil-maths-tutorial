@@ -1,10 +1,12 @@
 const { createHash, createHmac, timingSafeEqual } = require('node:crypto');
 
 const questions = require('../lib/questions');
+const englishQuestions = require('../lib/questions-en');
 
 const cookieName = '__Host-cmc-session';
 const lifetime = 8 * 60 * 60;
 const accounts = {
+  sanjee: { name: 'Sanjee', portal: 'english', env: 'PORTAL_SANJEE_PASSWORD' },
   student: { name: 'மாதிரி மாணவர்', env: 'PORTAL_STUDENT_PASSWORD' },
   teacher: { name: 'K. Kavithan', env: 'PORTAL_TEACHER_PASSWORD' }
 };
@@ -30,6 +32,7 @@ module.exports = (req, res) => {
     if (!role) return reply(res, 401, { error: 'login_required' });
     const account = { role, name: accounts[role].name };
     if (role === 'student') account.questions = questions;
+    if (role === 'sanjee') account.questions = englishQuestions;
     if (role === 'teacher') {
       account.classReport = [
         { name: 'மாணவர் 01', score: 18 },
@@ -57,7 +60,7 @@ module.exports = (req, res) => {
   }
   const account = Object.hasOwn(accounts, username) && accounts[username];
   const expected = account && process.env[account.env];
-  if (!expected || username !== portal || !timingSafeEqual(hash(password), hash(expected))) {
+  if (!expected || (account.portal ?? username) !== portal || !timingSafeEqual(hash(password), hash(expected))) {
     return reply(res, 401, { error: 'credentials' });
   }
   const value = username + '.' + (Date.now() + lifetime * 1000);
