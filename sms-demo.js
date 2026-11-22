@@ -4,10 +4,10 @@ const signup = location.pathname.replace(/\/$/, '') === '/signup';
 const nameKey = 'cmc-demo-student';
 let studentName;
 if (signup) {
-  document.documentElement.lang = 'ta';
-  document.title = 'மாணவர் பதிவு | Chithambara Maths Challenge';
-  document.querySelector('#heading').textContent = 'மாணவர் பதிவுப் படிவம்';
-  document.querySelector('#heading + p').textContent = 'சோதனைக்காக ஒரு கற்பனைப் பெயரைப் பயன்படுத்துங்கள். உண்மையான SMS அனுப்பப்படாது.';
+  document.title = 'Sign Up and Subscription | Chithambara Maths Challenge';
+  document.querySelector('#signup-and-plans').hidden = false;
+  document.querySelector('#heading').textContent = 'Create a student account';
+  document.querySelector('#heading + p').textContent = 'Use a fictional student name to try signup, SMS verification, and subscriptions. No real SMS is sent.';
 }
 const sampleNumber = '077 123 4567';
 const maskedNumber = '+94 77 ••• 4567';
@@ -23,11 +23,11 @@ function showNumber() {
   notice.textContent = '';
   if (signup) {
     panel.innerHTML = `<form id="signup-form">
-      <label for="student-name">மாணவர் பெயர்</label><input id="student-name" name="studentName" required maxlength="80" autocomplete="off" placeholder="மாதிரி மாணவர்">
-      <label for="grade">தரம்</label><select id="grade" name="grade" required><option value="5">தரம் 5</option></select>
-      <label for="phone">பாதுகாவலரின் மாதிரி கைப்பேசி எண்</label><input id="phone" type="tel" value="${sampleNumber}" readonly>
-      <p>சோதனைக் குறியீடு எண் சரிபார்ப்பை விளக்குகிறது. கற்பனைப் பெயர் இந்த உலாவித் தாவலில் மட்டும் சேமிக்கப்படும்.</p>
-      <label class="consent"><input name="confirm" type="checkbox" required> பாதுகாவலர் ஒப்புதலை இந்த மாதிரிக்காக உறுதிப்படுத்துகிறேன்.</label>
+      <label for="student-name">Student name</label><input id="student-name" name="studentName" required maxlength="80" autocomplete="off" placeholder="Sample Student">
+      <label for="grade">Grade</label><select id="grade" name="grade" required><option value="5">Grade 5</option></select>
+      <label for="phone">Sample guardian mobile number</label><input id="phone" type="tel" value="${sampleNumber}" readonly>
+      <p>The test code demonstrates control of the sample number. The fictional name is stored only in this browser tab.</p>
+      <label class="consent"><input name="confirm" type="checkbox" required> I confirm guardian consent for this demo.</label>
       <div class="actions"><button lang="en" class="primary">Send Test Code</button></div></form>`;
     panel.querySelector('#student-name').value = studentName || '';
     return;
@@ -87,7 +87,7 @@ panel.addEventListener('submit', event => {
     const values = new FormData(event.target);
     studentName = values.get('studentName').trim();
     if (!studentName) {
-      notice.textContent = 'கற்பனை மாணவர் பெயரை உள்ளிடுங்கள்.';
+      notice.textContent = 'Enter a fictional student name.';
       return;
     }
     issueCode();
@@ -119,8 +119,11 @@ panel.addEventListener('submit', event => {
   panel.innerHTML = `<h2 tabindex="-1">Demo sign-in successful</h2>
     <p>Guardian mobile verified for this simulation. Continue as the sample Grade 5 student.</p>
     <div class="inbox"><strong id="confirmed-name">Sample Student</strong><br>Grade 5</div>
-    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Grade 5 Sample</a><a href="/subscription">Manage Subscription</a><button data-action="reset">Try Again</button></div>`;
-  if (signup) panel.querySelector('#confirmed-name').textContent = studentName;
+    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Grade 5 Sample</a><a href="${signup ? '#plans-heading' : '/signup#plans-heading'}">Choose Subscription</a><button data-action="reset">Try Again</button></div>`;
+  if (signup) {
+    panel.querySelector('#confirmed-name').textContent = studentName;
+    document.dispatchEvent(new CustomEvent('demo-student-verified', { detail:studentName }));
+  }
   panel.querySelector('h2').focus();
 });
 showNumber();

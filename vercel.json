@@ -23,10 +23,13 @@
     {
       "source": "/signup",
       "destination": "/sms-demo.html"
-    },
+    }
+  ],
+  "redirects": [
     {
       "source": "/subscription",
-      "destination": "/subscription.html"
+      "destination": "/signup#plans-heading",
+      "permanent": false
     }
   ]
 }

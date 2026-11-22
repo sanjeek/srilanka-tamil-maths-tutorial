@@ -1,7 +1,7 @@
 const plans = {
-  free: { label: 'இலவசப் பயிற்சி', price: 0, detail: '20 வினாக்கள் · அட்டை தேவையில்லை' },
-  monthly: { label: 'மாதாந்தத் திட்டம்', price: 99000, detail: 'மாணவர் ஒருவருக்கு 30 நாள் சோதனை அணுகல்' },
-  annual: { label: 'வருடாந்தத் திட்டம்', price: 799000, detail: 'மாணவர் ஒருவருக்கு 12 மாத சோதனை அணுகல்' }
+  free: { label: 'Free Sample', price: 0, detail: '20 questions. No payment card required.' },
+  monthly: { label: 'Monthly', price: 99000, detail: '30 days of test access for one student.' },
+  annual: { label: 'Annual', price: 799000, detail: '12 months of test access for one student.' }
 };
 const storageKey = 'cmc-demo-subscription';
 const checkout = document.querySelector('#checkout');
@@ -24,31 +24,37 @@ function render() {
   const blocked = ['pending','active','cancelled'].includes(order?.state);
   document.querySelector('#plans').innerHTML = Object.entries(plans).map(([id, plan]) => `<article>
     <h2>${plan.label}</h2><p class="price">${money(plan.price)} <small>LKR</small></p><p>${plan.detail}</p>
-    ${id === 'annual' ? '<p>ஆண்டுச் சேமிப்பு '+money(plans.monthly.price * 12 - plans.annual.price)+'</p>' : ''}
+    ${id === 'annual' ? '<p>Annual savings '+money(plans.monthly.price * 12 - plans.annual.price)+'</p>' : ''}
     ${id === 'free' ? '<a lang="en" class="button" href="/sample-quiz">Start Free Sample</a>' :
       '<button lang="en" data-plan="'+id+'" '+(blocked ? 'disabled' : '')+'>Choose Plan</button>'}
   </article>`).join('');
   if (!name) {
-    checkout.innerHTML = '<h2>மாணவர் பதிவு</h2><p>சோதனைச் சந்தாவைத் தொடர மாணவரைப் பதிவு செய்யுங்கள்.</p><a lang="en" class="button" href="/signup">Create Student Account</a>';
+    checkout.innerHTML = '<h2>Verify the student first</h2><p>Complete signup and enter the test code above to choose a paid plan.</p><a lang="en" class="button" href="#heading">Go to Sign Up</a>';
     return;
   }
-  const person = '<h2>சோதனை மாணவர் — '+escape(name)+'</h2>';
+  const person = '<h2>Demo student — '+escape(name)+'</h2>';
   if (selected) {
-    checkout.innerHTML = person + '<p>'+plans[selected].label+' · '+money(plans[selected].price)+' LKR</p><p>ஒருமுறை சோதனை அணுகல். தானியங்கி புதுப்பிப்பு இல்லை.</p><div class="actions"><button lang="en" data-action="confirm">Confirm Test Order</button><button lang="en" class="secondary" data-action="back">Back</button></div>';
+    checkout.innerHTML = person + '<p>'+plans[selected].label+' · '+money(plans[selected].price)+' LKR</p><p>One-time test access. No automatic renewal.</p><div class="actions"><button lang="en" data-action="confirm">Confirm Test Order</button><button lang="en" class="secondary" data-action="back">Back</button></div>';
     return;
   }
-  if (!order) { checkout.innerHTML = person+'<p>ஒரு திட்டத்தைத் தெரிவு செய்யுங்கள்.</p>'; return; }
-  const statuses = { pending:'செயலாக்கப்படுகிறது',active:'சோதனை அணுகல் செயலில் உள்ளது',failed:'சோதனைக் கட்டணம் தோல்வியடைந்தது',cancelled:'ரத்து செய்யப்பட்டது · காலம் முடியும் வரை அணுகல் உண்டு',refunded:'பணம் திருப்பப்பட்டது · கட்டண அணுகல் முடிந்தது' };
+  if (!order) { checkout.innerHTML = person+'<p>Choose a plan to see the test order.</p>'; return; }
+  const statuses = { pending:'Processing test payment',active:'Test access is active',failed:'Test payment failed',cancelled:'Cancelled. Test access remains until the end of the period.',refunded:'Refunded. Paid test access has ended.' };
   const actions = { pending:[['active','Simulate Success'],['failed','Simulate Failure']],active:[['cancelled','Simulate Cancellation'],['refunded','Simulate Refund']],cancelled:[['refunded','Simulate Refund']] };
   checkout.innerHTML = person+'<p>'+plans[order.plan].label+' · '+money(plans[order.plan].price)+' LKR</p><p>'+statuses[order.state]+'</p><div class="actions">'+
     (actions[order.state] || []).map(([state,label])=>'<button lang="en" data-action="'+state+'">'+label+'</button>').join('')+'</div>';
 }
 
-document.addEventListener('click', event => {
+const planSection = document.querySelector('#signup-and-plans');
+document.addEventListener('demo-student-verified', event => {
+  if (name !== event.detail) { order = undefined; selected = undefined; }
+  name = event.detail;
+  render();
+});
+planSection.addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button) return;
   if (button.dataset.plan) {
-    if (!name) { location.assign('/signup'); return; }
+    if (!name) { document.querySelector('#heading').focus(); return; }
     selected = button.dataset.plan;
   } else {
     const action = button.dataset.action;
@@ -61,4 +67,4 @@ document.addEventListener('click', event => {
   render();
   checkout.scrollIntoView({ block:'nearest' });
 });
-render();
+if (!planSection.hidden) render();
