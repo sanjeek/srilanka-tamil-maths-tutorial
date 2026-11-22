@@ -1,6 +1,16 @@
 const panel = document.querySelector('#panel');
 const notice = document.querySelector('#notice');
-const sampleNumber = '077 123 4567';
+const signup = location.pathname.replace(/\/$/, '') === '/signup';
+const nameKey = 'cmc-demo-student';
+let studentName;
+if (signup) {
+  document.documentElement.lang = 'ta';
+  document.title = 'மாணவர் பதிவு | Chithambara Maths Challenge';
+  document.querySelector('#heading').textContent = 'மாணவர் பதிவுப் படிவம்';
+  document.querySelector('#heading + p').textContent = 'சோதனைக்காக ஒரு கற்பனைப் பெயரைப் பயன்படுத்துங்கள். உண்மையான SMS அனுப்பப்படாது.';
+}
+const sampleNumber = '0491 570 006';
+const maskedNumber = '+61 491 ••• 006';
 const lifetime = 5 * 60_000;
 const cooldown = 60_000;
 const limit = 5;
@@ -11,6 +21,17 @@ function showNumber() {
   clearInterval(timer);
   challenge = undefined;
   notice.textContent = '';
+  if (signup) {
+    panel.innerHTML = `<form id="signup-form">
+      <label for="student-name">மாணவர் பெயர்</label><input id="student-name" name="studentName" required maxlength="80" autocomplete="off" placeholder="மாதிரி மாணவர்">
+      <label for="grade">பள்ளி ஆண்டு</label><select id="grade" name="grade" required><option value="5">ஆண்டு 5</option></select>
+      <label for="phone">பாதுகாவலரின் மாதிரி கைப்பேசி எண்</label><input id="phone" type="tel" value="${sampleNumber}" readonly>
+      <p>சோதனைக் குறியீடு எண் சரிபார்ப்பை விளக்குகிறது. கற்பனைப் பெயர் இந்த உலாவித் தாவலில் மட்டும் சேமிக்கப்படும்.</p>
+      <label class="consent"><input name="confirm" type="checkbox" required> பாதுகாவலர் ஒப்புதலை இந்த மாதிரிக்காக உறுதிப்படுத்துகிறேன்.</label>
+      <div class="actions"><button lang="en" class="primary">Send Test Code</button></div></form>`;
+    panel.querySelector('#student-name').value = studentName || '';
+    return;
+  }
   panel.innerHTML = `<label for="phone">Sample guardian mobile</label>
     <input id="phone" type="tel" value="${sampleNumber}" readonly>
     <div class="actions"><button class="primary" data-action="send">Send Test Code</button></div>`;
@@ -26,7 +47,7 @@ function issueCode() {
   clearInterval(timer);
   notice.textContent = '';
   panel.innerHTML = `<h2>Verify the sample number</h2>
-    <div class="inbox"><strong>Simulated SMS to ${sampleNumber}</strong><br>
+    <div class="inbox"><strong>Simulated SMS to ${maskedNumber}</strong><br>
     Your verification code is <strong class="code">${code}</strong>.</div>
     <form><label for="code">Six-digit code</label>
       <input id="code" name="code" type="text" inputmode="numeric" autocomplete="off" pattern="[0-9]{6}" maxlength="6" required>
@@ -62,6 +83,16 @@ panel.addEventListener('click', event => {
 
 panel.addEventListener('submit', event => {
   event.preventDefault();
+  if (event.target.id === 'signup-form') {
+    const values = new FormData(event.target);
+    studentName = values.get('studentName').trim();
+    if (!studentName) {
+      notice.textContent = 'கற்பனை மாணவர் பெயரை உள்ளிடுங்கள்.';
+      return;
+    }
+    issueCode();
+    return;
+  }
   if (!challenge || Date.now() >= challenge.expires) {
     notice.textContent = 'The test code expired. Request a new one.';
     return;
@@ -79,10 +110,17 @@ panel.addEventListener('submit', event => {
   clearInterval(timer);
   challenge = undefined;
   notice.textContent = '';
+  if (signup) {
+    try {
+      if (sessionStorage.getItem(nameKey) !== studentName) sessionStorage.removeItem('cmc-demo-subscription');
+      sessionStorage.setItem(nameKey, studentName);
+    } catch {}
+  }
   panel.innerHTML = `<h2 tabindex="-1">Demo sign-in successful</h2>
-    <p>Guardian mobile verified for this simulation. Continue as the sample Grade 5 student.</p>
-    <div class="inbox"><strong>Sample Student</strong><br>Grade 5</div>
-    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Grade 5 Sample</a><button data-action="reset">Try Again</button></div>`;
+    <p>Guardian mobile verified for this simulation. Continue as the sample Year 5 student.</p>
+    <div class="inbox"><strong id="confirmed-name">Sample Student</strong><br>Year 5</div>
+    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Year 5 Sample</a><a href="/subscription">Manage Subscription</a><button data-action="reset">Try Again</button></div>`;
+  if (signup) panel.querySelector('#confirmed-name').textContent = studentName;
   panel.querySelector('h2').focus();
 });
 showNumber();
