@@ -9,8 +9,8 @@ if (signup) {
   document.querySelector('#heading').textContent = 'மாணவர் பதிவுப் படிவம்';
   document.querySelector('#heading + p').textContent = 'சோதனைக்காக ஒரு கற்பனைப் பெயரைப் பயன்படுத்துங்கள். உண்மையான SMS அனுப்பப்படாது.';
 }
-const sampleNumber = '0491 570 006';
-const maskedNumber = '+61 491 ••• 006';
+const sampleNumber = '077 123 4567';
+const maskedNumber = '+94 77 ••• 4567';
 const lifetime = 5 * 60_000;
 const cooldown = 60_000;
 const limit = 5;
@@ -24,7 +24,7 @@ function showNumber() {
   if (signup) {
     panel.innerHTML = `<form id="signup-form">
       <label for="student-name">மாணவர் பெயர்</label><input id="student-name" name="studentName" required maxlength="80" autocomplete="off" placeholder="மாதிரி மாணவர்">
-      <label for="grade">பள்ளி ஆண்டு</label><select id="grade" name="grade" required><option value="5">ஆண்டு 5</option></select>
+      <label for="grade">தரம்</label><select id="grade" name="grade" required><option value="5">தரம் 5</option></select>
       <label for="phone">பாதுகாவலரின் மாதிரி கைப்பேசி எண்</label><input id="phone" type="tel" value="${sampleNumber}" readonly>
       <p>சோதனைக் குறியீடு எண் சரிபார்ப்பை விளக்குகிறது. கற்பனைப் பெயர் இந்த உலாவித் தாவலில் மட்டும் சேமிக்கப்படும்.</p>
       <label class="consent"><input name="confirm" type="checkbox" required> பாதுகாவலர் ஒப்புதலை இந்த மாதிரிக்காக உறுதிப்படுத்துகிறேன்.</label>
@@ -117,9 +117,9 @@ panel.addEventListener('submit', event => {
     } catch {}
   }
   panel.innerHTML = `<h2 tabindex="-1">Demo sign-in successful</h2>
-    <p>Guardian mobile verified for this simulation. Continue as the sample Year 5 student.</p>
-    <div class="inbox"><strong id="confirmed-name">Sample Student</strong><br>Year 5</div>
-    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Year 5 Sample</a><a href="/subscription">Manage Subscription</a><button data-action="reset">Try Again</button></div>`;
+    <p>Guardian mobile verified for this simulation. Continue as the sample Grade 5 student.</p>
+    <div class="inbox"><strong id="confirmed-name">Sample Student</strong><br>Grade 5</div>
+    <div class="actions"><a lang="en" class="primary" href="/sample-quiz">Start Grade 5 Sample</a><a href="/subscription">Manage Subscription</a><button data-action="reset">Try Again</button></div>`;
   if (signup) panel.querySelector('#confirmed-name').textContent = studentName;
   panel.querySelector('h2').focus();
 });
